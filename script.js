@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
             chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
         });
     }
+
+    loadExchangeRates();
 });
 
 // POPUP FUNCTION
@@ -69,16 +71,9 @@ function saveChatMessage(sender, message) {
     localStorage.setItem("supportMessages", JSON.stringify(messages));
 }
 
-// LOAD EXCHANGE RATES FROM ADMIN PANEL
-document.addEventListener("DOMContentLoaded", () => {
-    function getRate(key, defaultValue) {
-        const value = localStorage.getItem("exchangeRates");
-        if (value) {
-            const rates = JSON.parse(value);
-            return rates[key] ? `₦${rates[key]}` : defaultValue;
-        }
-        return defaultValue;
-    }
+// LOAD EXCHANGE RATES FROM LOCAL STORAGE
+function loadExchangeRates() {
+    const rates = JSON.parse(localStorage.getItem("exchangeRates")) || {};
 
     const rateElements = {
         btcRate: document.getElementById("btcRate"),
@@ -92,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Object.keys(rateElements).forEach(key => {
         if (rateElements[key]) {
-            rateElements[key].textContent = getRate(key, "Rate not set");
+            rateElements[key].textContent = rates[key] ? `₦${rates[key]}` : "Rate not set";
         }
     });
-});
+}
