@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - FastSwap</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <script src="admin-script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <button id="darkModeToggle">Dark Mode</button>
+    </header>
+
+    <section id="updateRates">
+        <h2>Update Exchange Rates</h2>
+        <label>BTC Rate (₦ per BTC): <input type="text" id="btcRate"></label>
+        <label>ETH Rate (₦ per ETH): <input type="text" id="ethRate"></label>
+        <label>USDT Rate (₦ per USDT): <input type="text" id="usdtRate"></label>
+        <label>Amazon Gift Card (₦ per $100): <input type="text" id="amazonRate"></label>
+        <label>Steam Gift Card (₦ per $100): <input type="text" id="steamRate"></label>
+        <label>Google Play Gift Card (₦ per $100): <input type="text" id="googlePlayRate"></label>
+        <label>iTunes Gift Card (₦ per $100): <input type="text" id="itunesRate"></label>
+        <button onclick="updateRates()">Update Rates</button>
+    </section>
+
+    <section id="transactions">
+        <h2>Pending Transactions</h2>
+        <ul id="transactionList">
+            <li>No transactions yet.</li>
+        </ul>
+    </section>
+
+    <section id="customerSupport">
+        <h2>Customer Support Messages</h2>
+        <ul id="supportMessages">
+            <li>No messages yet.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FastSwap Admin Panel</p>
+    </footer>
+</body>
+</html>
