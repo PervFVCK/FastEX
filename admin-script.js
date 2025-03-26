@@ -18,38 +18,40 @@ function showPopup(message) {
 
 // UPDATE RATES
 function updateRates() {
-    const btcRate = document.getElementById("btcRate").value;
-    const ethRate = document.getElementById("ethRate").value;
-    const usdtRate = document.getElementById("usdtRate").value;
-    const amazonRate = document.getElementById("amazonRate").value;
-    const steamRate = document.getElementById("steamRate").value;
-    const googlePlayRate = document.getElementById("googlePlayRate").value;
-    const itunesRate = document.getElementById("itunesRate").value;
+    const rates = {
+        btcRate: document.getElementById("btcRate").value,
+        ethRate: document.getElementById("ethRate").value,
+        usdtRate: document.getElementById("usdtRate").value,
+        amazonRate: document.getElementById("amazonRate").value,
+        steamRate: document.getElementById("steamRate").value,
+        googlePlayRate: document.getElementById("googlePlayRate").value,
+        itunesRate: document.getElementById("itunesRate").value
+    };
 
-    localStorage.setItem("btcRate", btcRate);
-    localStorage.setItem("ethRate", ethRate);
-    localStorage.setItem("usdtRate", usdtRate);
-    localStorage.setItem("amazonRate", amazonRate);
-    localStorage.setItem("steamRate", steamRate);
-    localStorage.setItem("googlePlayRate", googlePlayRate);
-    localStorage.setItem("itunesRate", itunesRate);
-
+    localStorage.setItem("exchangeRates", JSON.stringify(rates));
     showPopup("Rates updated successfully!");
+
+    // Notify the main site that rates have changed
+    localStorage.setItem("ratesUpdated", Date.now());
 }
 
 // LOAD RATES ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("btcRate").value = localStorage.getItem("btcRate") || "";
-    document.getElementById("ethRate").value = localStorage.getItem("ethRate") || "";
-    document.getElementById("usdtRate").value = localStorage.getItem("usdtRate") || "";
-    document.getElementById("amazonRate").value = localStorage.getItem("amazonRate") || "";
-    document.getElementById("steamRate").value = localStorage.getItem("steamRate") || "";
-    document.getElementById("googlePlayRate").value = localStorage.getItem("googlePlayRate") || "";
-    document.getElementById("itunesRate").value = localStorage.getItem("itunesRate") || "";
+    const storedRates = JSON.parse(localStorage.getItem("exchangeRates")) || {};
+    
+    document.getElementById("btcRate").value = storedRates.btcRate || "";
+    document.getElementById("ethRate").value = storedRates.ethRate || "";
+    document.getElementById("usdtRate").value = storedRates.usdtRate || "";
+    document.getElementById("amazonRate").value = storedRates.amazonRate || "";
+    document.getElementById("steamRate").value = storedRates.steamRate || "";
+    document.getElementById("googlePlayRate").value = storedRates.googlePlayRate || "";
+    document.getElementById("itunesRate").value = storedRates.itunesRate || "";
+
+    loadSupportMessages();
 });
 
-// CUSTOMER SUPPORT MESSAGES (SIMULATED)
-document.addEventListener("DOMContentLoaded", () => {
+// LOAD CUSTOMER SUPPORT MESSAGES
+function loadSupportMessages() {
     let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
     const messageList = document.getElementById("supportMessages");
 
@@ -64,11 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
             messageList.appendChild(li);
         });
     }
-});
+}
 
+// DELETE SUPPORT MESSAGE
 function deleteMessage(index) {
     let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
     messages.splice(index, 1);
     localStorage.setItem("supportMessages", JSON.stringify(messages));
-    location.reload();
+    loadSupportMessages();
 }
