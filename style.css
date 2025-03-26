@@ -1,60 +1,149 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    color: black;
+/* GENERAL STYLING */
+* {
     margin: 0;
     padding: 0;
-    text-align: center;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Header */
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background 0.3s, color 0.3s;
+}
+
 header {
+    background: #007bff;
+    color: white;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
-    background-color: #222;
-    color: white;
+    align-items: center;
 }
 
 nav a {
     color: white;
-    margin: 0 15px;
     text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
 }
 
-/* Hero Section */
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* HERO SECTION */
 #hero {
-    padding: 50px 20px;
-    background: #f8f8f8;
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #007bff, #00bcd4);
+    color: white;
 }
 
 .cta-button {
     display: inline-block;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
+    padding: 12px 20px;
+    background: #ffcc00;
+    color: #333;
+    font-weight: bold;
     text-decoration: none;
+    border-radius: 5px;
     margin-top: 15px;
 }
 
-/* Chat Support */
-#chatBox {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: white;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    display: none;
+.cta-button:hover {
+    background: #ffb300;
 }
 
-/* Dark Mode */
-.dark-mode {
-    background-color: black;
+/* TABLE STYLING */
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #007bff;
     color: white;
 }
 
-.hidden {
+/* CHATBOX */
+#chatBox {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
     display: none;
+}
+
+#chatBox textarea {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+#chatBox button {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#chatBox button:hover {
+    background: #0056b3;
+}
+
+#chatToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+/* DARK MODE */
+.dark-mode {
+    background-color: #222;
+    color: white;
+}
+
+.dark-mode table {
+    background: #333;
+}
+
+.dark-mode th {
+    background: #444;
+}
+
+.dark-mode #chatBox {
+    background: #333;
+    color: white;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #007bff;
+    color: white;
+    margin-top: 20px;
 }
