@@ -42,28 +42,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// CHAT MESSAGE SENT CONFIRMATION
-function sendMessage() {
-    const message = document.getElementById("chatMessage").value.trim();
-    if (message !== "") {
-        showPopup("Your message has been sent! Expect a response soon.");
-        document.getElementById("chatMessage").value = "";
-    } else {
-        showPopup("Please enter a message before sending.");
+// CHAT MESSAGE FUNCTIONALITY (Stores messages in localStorage)
+document.addEventListener("DOMContentLoaded", () => {
+    const chatForm = document.getElementById("chatForm");
+    const chatMessageInput = document.getElementById("chatMessage");
+
+    if (chatForm) {
+        chatForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const message = chatMessageInput.value.trim();
+            if (message !== "") {
+                saveChatMessage("Customer", message);
+                showPopup("Your message has been sent! Expect a response soon.");
+                chatMessageInput.value = "";
+            } else {
+                showPopup("Please enter a message before sending.");
+            }
+        });
     }
+});
+
+// STORE CHAT MESSAGES
+function saveChatMessage(sender, message) {
+    let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
+    messages.push({ sender, message, timestamp: new Date().toISOString() });
+    localStorage.setItem("supportMessages", JSON.stringify(messages));
 }
 
 // LOAD EXCHANGE RATES FROM ADMIN PANEL
 document.addEventListener("DOMContentLoaded", () => {
     function getRate(key, defaultValue) {
-        return localStorage.getItem(key) ? `₦${localStorage.getItem(key)}` : defaultValue;
+        const value = localStorage.getItem("exchangeRates");
+        if (value) {
+            const rates = JSON.parse(value);
+            return rates[key] ? `₦${rates[key]}` : defaultValue;
+        }
+        return defaultValue;
     }
 
-    document.getElementById("btcRate").textContent = getRate("btcRate", "Rate not set");
-    document.getElementById("ethRate").textContent = getRate("ethRate", "Rate not set");
-    document.getElementById("usdtRate").textContent = getRate("usdtRate", "Rate not set");
-    document.getElementById("amazonRate").textContent = getRate("amazonRate", "Rate not set");
-    document.getElementById("steamRate").textContent = getRate("steamRate", "Rate not set");
-    document.getElementById("googlePlayRate").textContent = getRate("googlePlayRate", "Rate not set");
-    document.getElementById("itunesRate").textContent = getRate("itunesRate", "Rate not set");
+    const rateElements = {
+        btcRate: document.getElementById("btcRate"),
+        ethRate: document.getElementById("ethRate"),
+        usdtRate: document.getElementById("usdtRate"),
+        amazonRate: document.getElementById("amazonRate"),
+        steamRate: document.getElementById("steamRate"),
+        googlePlayRate: document.getElementById("googlePlayRate"),
+        itunesRate: document.getElementById("itunesRate")
+    };
+
+    Object.keys(rateElements).forEach(key => {
+        if (rateElements[key]) {
+            rateElements[key].textContent = getRate(key, "Rate not set");
+        }
+    });
 });
