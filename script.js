@@ -1,16 +1,13 @@
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
-const chatBox = document.getElementById("chatBox");
+    const chatBox = document.getElementById("chatBox");
 
-if (chatToggle && chatBox) {
-    chatToggle.addEventListener("click", () => {
-        chatBox.classList.toggle("hidden"); // Toggles visibility using the CSS class
-        console.log("Chat toggle clicked"); // Debugging log
-    });
-} else {
-    console.log("Chat elements not found on this page.");
-}
+    if (chatToggle && chatBox) {
+        chatToggle.addEventListener("click", () => {
+            chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+        });
+    }
 });
 
 // POPUP FUNCTION
