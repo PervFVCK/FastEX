@@ -13,6 +13,7 @@
         <button id="darkModeToggle">Dark Mode</button>
     </header>
 
+    <!-- Exchange Rate Update Section -->
     <section id="updateRates">
         <h2>Update Exchange Rates</h2>
         <label>BTC Rate (₦ per BTC): <input type="text" id="btcRate"></label>
@@ -25,15 +26,25 @@
         <button onclick="updateRates()">Update Rates</button>
     </section>
 
+    <!-- Pending Transactions -->
     <section id="transactions">
         <h2>Pending Transactions</h2>
-        <ul id="transactionList">
-            <li>No transactions yet.</li>
+        <ul id="pendingTransactions">
+            <li>No pending transactions.</li>
         </ul>
     </section>
 
+    <!-- Completed Transactions -->
+    <section id="completedTransactionsSection">
+        <h2>Completed Transactions</h2>
+        <ul id="completedTransactions">
+            <li>No completed transactions.</li>
+        </ul>
+    </section>
+
+    <!-- Customer Messages -->
     <section id="customerSupport">
-        <h2>Customer Support Messages</h2>
+        <h2>Customer Messages</h2>
         <ul id="supportMessages">
             <li>No messages yet.</li>
         </ul>
