@@ -9,7 +9,7 @@
 body {
     background: linear-gradient(to bottom, #f4f4f4, #eaeaea);
     color: #333;
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s ease, color 0.3s ease;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -153,8 +153,15 @@ th {
     color: white;
 }
 
+.dark-mode header, 
+.dark-mode footer {
+    background: #222;
+    color: white;
+}
+
 .dark-mode table {
     background: #333;
+    color: white;
 }
 
 .dark-mode th {
@@ -164,6 +171,16 @@ th {
 .dark-mode #chatBox {
     background: #333;
     color: white;
+    border: 1px solid #666;
+}
+
+.dark-mode .cta-button {
+    background: #ffa500;
+    color: black;
+}
+
+.dark-mode .cta-button:hover {
+    background: #ff8c00;
 }
 
 /* FOOTER */
@@ -195,9 +212,6 @@ body::after {
     right: 0;
     background: linear-gradient(to left, #f4f4f4, transparent);
 }
-
-
-
 
 /* POPUP STYLES */
 .popup {
