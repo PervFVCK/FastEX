@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swap Crypto & Gift Cards - FastSwap</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>FastSwap</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="swap.html">Swap</a>
+            <a href="rates.html">Rates</a>
+            <a href="#" id="chatToggle">💬 Chat</a>
+        </nav>
+        <button id="darkModeToggle">🌙 Dark Mode</button>
+    </header>
+
+    <section id="cryptoSwap">
+        <h2>Swap Cryptocurrency for Naira</h2>
+        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+            <label for="cryptoType">Select Cryptocurrency:</label>
+            <select name="cryptoType" required>
+                <option value="Bitcoin">Bitcoin (BTC)</option>
+                <option value="Ethereum">Ethereum (ETH)</option>
+                <option value="USDT">USDT (Tether)</option>
+            </select>
+
+            <label for="amount">Amount to Swap:</label>
+            <input type="number" name="amount" placeholder="Enter amount" required>
+
+            <label for="walletAddress">Send Crypto to:</label>
+            <p id="walletAddress">YOUR_CRYPTO_WALLET_ADDRESS_HERE</p>
+
+            <label for="bankName">Bank Name:</label>
+            <input type="text" name="bankName" placeholder="Enter your bank name" required>
+
+            <label for="accountNumber">Bank Account Number:</label>
+            <input type="text" name="accountNumber" placeholder="Enter your account number" required>
+
+            <input type="hidden" name="_subject" value="New Crypto Swap Request">
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+
+    <section id="giftCardSwap">
+        <h2>Swap Gift Cards for Naira</h2>
+        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" enctype="multipart/form-data">
+            <label for="giftCardType">Select Gift Card:</label>
+            <select name="giftCardType" required>
+                <option value="Amazon">Amazon</option>
+                <option value="Steam">Steam</option>
+                <option value="Google Play">Google Play</option>
+                <option value="iTunes">iTunes</option>
+            </select>
+
+            <label for="giftCardValue">Gift Card Value (USD):</label>
+            <input type="number" name="giftCardValue" placeholder="Enter value" required>
+
+            <label for="giftCardCode">Enter Gift Card Code (if available):</label>
+            <input type="text" name="giftCardCode" placeholder="Enter e-code">
+
+            <label for="giftCardImage">Upload Gift Card Image:</label>
+            <input type="file" name="giftCardImage" accept="image/*">
+
+            <label for="bankName">Bank Name:</label>
+            <input type="text" name="bankName" placeholder="Enter your bank name" required>
+
+            <label for="accountNumber">Bank Account Number:</label>
+            <input type="text" name="accountNumber" placeholder="Enter your account number" required>
+
+            <input type="hidden" name="_subject" value="New Gift Card Swap Request">
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+
+    <!-- Chat Support -->
+    <div id="chatBox" class="hidden">
+        <h3>Customer Support</h3>
+        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Type your message..." required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
