@@ -5,6 +5,16 @@ const chatBox = document.getElementById("chatBox");
 chatToggle.addEventListener("click", () => {
     chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const chatToggle = document.getElementById("chatToggle");
+    const chatBox = document.getElementById("chatBox");
+
+    if (chatToggle && chatBox) {
+        chatToggle.addEventListener("click", () => {
+            chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+        });
+    }
+});
 
 // POPUP FUNCTION
 function showPopup(message) {
