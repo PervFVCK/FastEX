@@ -24,11 +24,17 @@ function showPopup(message) {
     }, 3000);
 }
 
-// GIFT CARD UPLOAD CONFIRMATION
+// GIFT CARD UPLOAD CONFIRMATION & SAVE TRANSACTION
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".giftcard-form").forEach(form => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
+            const transaction = {
+                type: "Gift Card",
+                status: "Pending",
+                timestamp: new Date().toISOString()
+            };
+            saveTransaction(transaction);
             showPopup("Gift card submitted! We'll verify and process your request.");
         });
     });
@@ -69,6 +75,13 @@ function saveChatMessage(sender, message) {
     let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
     messages.push({ sender, message, timestamp: new Date().toISOString() });
     localStorage.setItem("supportMessages", JSON.stringify(messages));
+}
+
+// STORE TRANSACTIONS
+function saveTransaction(transaction) {
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    transactions.push(transaction);
+    localStorage.setItem("transactions", JSON.stringify(transactions));
 }
 
 // LOAD EXCHANGE RATES FROM LOCAL STORAGE
