@@ -29,10 +29,10 @@ function updateRates() {
     };
 
     localStorage.setItem("exchangeRates", JSON.stringify(rates));
-    showPopup("Rates updated successfully!");
+    showPopup("Exchange rates updated successfully!");
 }
 
-// LOAD RATES ON PAGE LOAD
+// LOAD RATES ON ADMIN PAGE LOAD
 document.addEventListener("DOMContentLoaded", () => {
     const storedRates = JSON.parse(localStorage.getItem("exchangeRates")) || {};
     
@@ -43,9 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("steamRate").value = storedRates.steamRate || "";
     document.getElementById("googlePlayRate").value = storedRates.googlePlayRate || "";
     document.getElementById("itunesRate").value = storedRates.itunesRate || "";
-
-    loadSupportMessages();
-    loadTransactions();
 });
 
 // LOAD CUSTOMER SUPPORT MESSAGES
@@ -60,26 +57,9 @@ function loadSupportMessages() {
         messages.forEach((msg, index) => {
             let li = document.createElement("li");
             li.innerHTML = `<strong>${msg.name}:</strong> ${msg.message} 
-                            <input type="text" id="reply-${index}" placeholder="Reply...">
-                            <button onclick="replyMessage(${index})">Reply</button>
                             <button onclick="deleteMessage(${index})">Delete</button>`;
             messageList.appendChild(li);
         });
-    }
-}
-
-// REPLY TO CUSTOMER MESSAGE
-function replyMessage(index) {
-    let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
-    let replyText = document.getElementById(`reply-${index}`).value.trim();
-
-    if (replyText !== "") {
-        messages[index].reply = replyText;
-        localStorage.setItem("supportMessages", JSON.stringify(messages));
-        showPopup("Reply sent!");
-        loadSupportMessages();
-    } else {
-        showPopup("Enter a reply before sending.");
     }
 }
 
@@ -91,51 +71,4 @@ function deleteMessage(index) {
     loadSupportMessages();
 }
 
-// LOAD TRANSACTIONS (Pending & Completed)
-function loadTransactions() {
-    let pending = JSON.parse(localStorage.getItem("pendingTransactions")) || [];
-    let completed = JSON.parse(localStorage.getItem("completedTransactions")) || [];
-    
-    const pendingList = document.getElementById("pendingTransactions");
-    const completedList = document.getElementById("completedTransactions");
-
-    // Load pending transactions
-    if (pending.length === 0) {
-        pendingList.innerHTML = "<li>No pending transactions.</li>";
-    } else {
-        pendingList.innerHTML = "";
-        pending.forEach((txn, index) => {
-            let li = document.createElement("li");
-            li.innerHTML = `<strong>${txn.user}:</strong> ${txn.amount} ${txn.type} 
-                            <button onclick="completeTransaction(${index})">Complete</button>`;
-            pendingList.appendChild(li);
-        });
-    }
-
-    // Load completed transactions
-    if (completed.length === 0) {
-        completedList.innerHTML = "<li>No completed transactions.</li>";
-    } else {
-        completedList.innerHTML = "";
-        completed.forEach(txn => {
-            let li = document.createElement("li");
-            li.innerHTML = `<strong>${txn.user}:</strong> ${txn.amount} ${txn.type} <span style="color: green;">(Completed)</span>`;
-            completedList.appendChild(li);
-        });
-    }
-}
-
-// MARK TRANSACTION AS COMPLETED
-function completeTransaction(index) {
-    let pending = JSON.parse(localStorage.getItem("pendingTransactions")) || [];
-    let completed = JSON.parse(localStorage.getItem("completedTransactions")) || [];
-
-    let transaction = pending.splice(index, 1)[0]; // Remove from pending and move to completed
-    completed.push(transaction);
-
-    localStorage.setItem("pendingTransactions", JSON.stringify(pending));
-    localStorage.setItem("completedTransactions", JSON.stringify(completed));
-
-    showPopup("Transaction marked as completed!");
-    loadTransactions();
-}
+document.addEventListener("DOMContentLoaded", loadSupportMessages);
