@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rates - FastSwap</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>FastSwap</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="swap.html">Swap</a>
+            <a href="rates.html">Rates</a>
+            <a href="#" id="chatToggle">💬 Chat</a>
+        </nav>
+        <button id="darkModeToggle">🌙 Dark Mode</button>
+    </header>
+
+    <section id="cryptoRates">
+        <h2>Current Crypto Exchange Rates</h2>
+        <table>
+            <tr>
+                <th>Cryptocurrency</th>
+                <th>Rate (₦ per unit)</th>
+            </tr>
+            <tr>
+                <td>Bitcoin (BTC)</td>
+                <td id="btcRate">Loading...</td>
+            </tr>
+            <tr>
+                <td>Ethereum (ETH)</td>
+                <td id="ethRate">Loading...</td>
+            </tr>
+            <tr>
+                <td>USDT (Tether)</td>
+                <td id="usdtRate">Loading...</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="giftCardRates">
+        <h2>Current Gift Card Exchange Rates</h2>
+        <table>
+            <tr>
+                <th>Gift Card</th>
+                <th>Rate (₦ per $100)</th>
+            </tr>
+            <tr>
+                <td>Amazon</td>
+                <td id="amazonRate">Loading...</td>
+            </tr>
+            <tr>
+                <td>Steam</td>
+                <td id="steamRate">Loading...</td>
+            </tr>
+            <tr>
+                <td>Google Play</td>
+                <td id="googlePlayRate">Loading...</td>
+            </tr>
+            <tr>
+                <td>iTunes</td>
+                <td id="itunesRate">Loading...</td>
+            </tr>
+        </table>
+    </section>
+
+    <p class="note">📌 **Note:** Rates are updated manually by the admin.</p>
+
+    <!-- Chat Support -->
+    <div id="chatBox" class="hidden">
+        <h3>Customer Support</h3>
+        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Type your message..." required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Manually update rates here
+        document.getElementById('btcRate').textContent = "₦800,000 per BTC";
+        document.getElementById('ethRate').textContent = "₦250,000 per ETH";
+        document.getElementById('usdtRate').textContent = "₦1,200 per USDT";
+        document.getElementById('amazonRate').textContent = "₦70,000 per $100";
+        document.getElementById('steamRate').textContent = "₦65,000 per $100";
+        document.getElementById('googlePlayRate').textContent = "₦68,000 per $100";
+        document.getElementById('itunesRate').textContent = "₦69,000 per $100";
+    </script>
+
+</body>
+</html>
