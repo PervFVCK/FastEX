@@ -95,7 +95,7 @@
 
     <section id="cryptoSwap">
         <h2>Swap Cryptocurrency for Naira</h2>
-        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+        <form action="https://formsubmit.co/tonyparcour1@gmail.com" method="POST">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
@@ -122,13 +122,21 @@
             <input type="text" name="accountNumber" placeholder="Enter your account number" required>
 
             <input type="hidden" name="_subject" value="New Crypto Swap Request">
+            <!-- Hidden Fields for Admin -->
+    <input type="hidden" name="_subject" value="New Crypto Swap Request">
+    <input type="hidden" name="_template" value="table"> <!-- Formats the email as a table -->
+    <input type="hidden" name="_cc" value="YOUR_EMAIL_HERE"> <!-- Sends a copy to you -->
+
+    <!-- Auto-Reply to User -->
+    <input type="hidden" name="_autoresponse" value="Thank you for your swap request! We will process your transaction shortly. If you have any questions, contact our support.">
+
             <button type="submit">Initiate Swap</button>
         </form>
     </section>
 
     <section id="giftCardSwap">
         <h2>Swap Gift Cards for Naira</h2>
-        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST" enctype="multipart/form-data">
+        <form action="https://formsubmit.co/tonyparcour1@gmail.com" method="POST" enctype="multipart/form-data">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
@@ -159,6 +167,14 @@
             <input type="text" name="accountNumber" placeholder="Enter your account number" required>
 
             <input type="hidden" name="_subject" value="New Gift Card Swap Request">
+            <!-- Hidden Fields for Admin -->
+    <input type="hidden" name="_subject" value="New Crypto Swap Request">
+    <input type="hidden" name="_template" value="table"> <!-- Formats the email as a table -->
+    <input type="hidden" name="_cc" value="YOUR_EMAIL_HERE"> <!-- Sends a copy to you -->
+
+    <!-- Auto-Reply to User -->
+    <input type="hidden" name="_autoresponse" value="Thank you for your swap request! We will process your transaction shortly. If you have any questions, contact our support.">
+
             <button type="submit">Initiate Swap</button>
         </form>
     </section>
@@ -166,7 +182,7 @@
     <!-- Chat Support -->
     <div id="chatBox" class="hidden">
         <h3>Customer Support</h3>
-        <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+        <form action="https://formsubmit.co/tonyparcour1@gmail.com" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <textarea name="message" placeholder="Type your message..." required></textarea>
