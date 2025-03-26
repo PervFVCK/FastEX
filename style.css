@@ -204,3 +204,7 @@ body::after {
     90% { opacity: 1; }
     100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
 }
+
+.hidden {
+    display: none; /* REMOVE "!important" if it's there */
+}
