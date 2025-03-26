@@ -16,7 +16,7 @@ function showPopup(message) {
     }, 3000);
 }
 
-// UPDATE RATES
+// UPDATE EXCHANGE RATES
 function updateRates() {
     const rates = {
         btcRate: document.getElementById("btcRate").value,
@@ -32,7 +32,7 @@ function updateRates() {
     showPopup("Exchange rates updated successfully!");
 }
 
-// LOAD RATES ON ADMIN PAGE LOAD
+// LOAD EXCHANGE RATES ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", () => {
     const storedRates = JSON.parse(localStorage.getItem("exchangeRates")) || {};
     
@@ -56,7 +56,7 @@ function loadSupportMessages() {
         messageList.innerHTML = "";
         messages.forEach((msg, index) => {
             let li = document.createElement("li");
-            li.innerHTML = `<strong>${msg.name}:</strong> ${msg.message} 
+            li.innerHTML = `<strong>${msg.sender}:</strong> ${msg.message} 
                             <button onclick="deleteMessage(${index})">Delete</button>`;
             messageList.appendChild(li);
         });
@@ -71,4 +71,37 @@ function deleteMessage(index) {
     loadSupportMessages();
 }
 
-document.addEventListener("DOMContentLoaded", loadSupportMessages);
+// LOAD TRANSACTIONS
+function loadTransactions() {
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    const transactionList = document.getElementById("transactions");
+
+    if (transactions.length === 0) {
+        transactionList.innerHTML = "<li>No transactions yet.</li>";
+    } else {
+        transactionList.innerHTML = "";
+        transactions.forEach((tx, index) => {
+            let li = document.createElement("li");
+            li.innerHTML = `<strong>Type:</strong> ${tx.type} - <strong>Status:</strong> ${tx.status} 
+                            <button onclick="markCompleted(${index})">Mark Completed</button>`;
+            transactionList.appendChild(li);
+        });
+    }
+}
+
+// MARK TRANSACTION AS COMPLETED
+function markCompleted(index) {
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    if (transactions[index]) {
+        transactions[index].status = "Completed";
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+        loadTransactions();
+        showPopup("Transaction marked as completed.");
+    }
+}
+
+// LOAD ALL DATA ON PAGE LOAD
+document.addEventListener("DOMContentLoaded", () => {
+    loadSupportMessages();
+    loadTransactions();
+});
