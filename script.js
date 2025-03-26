@@ -5,8 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (chatToggle && chatBox) {
         chatToggle.addEventListener("click", () => {
-            chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+            chatBox.style.display = (chatBox.style.display === "block") ? "none" : "block";
+            console.log("Chat toggle clicked"); // Debugging
         });
+    } else {
+        console.log("Chat elements not found on this page");
     }
 });
 
