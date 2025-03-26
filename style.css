@@ -9,7 +9,6 @@
 body {
     background: linear-gradient(to bottom, #f4f4f4, #eaeaea);
     color: #333;
-    transition: background 0.3s ease, color 0.3s ease;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -145,42 +144,6 @@ th {
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-}
-
-/* DARK MODE */
-.dark-mode {
-    background: #222;
-    color: white;
-}
-
-.dark-mode header, 
-.dark-mode footer {
-    background: #222;
-    color: white;
-}
-
-.dark-mode table {
-    background: #333;
-    color: white;
-}
-
-.dark-mode th {
-    background: #444;
-}
-
-.dark-mode #chatBox {
-    background: #333;
-    color: white;
-    border: 1px solid #666;
-}
-
-.dark-mode .cta-button {
-    background: #ffa500;
-    color: black;
-}
-
-.dark-mode .cta-button:hover {
-    background: #ff8c00;
 }
 
 /* FOOTER */
