@@ -2,7 +2,22 @@
 const darkModeToggle = document.getElementById("darkModeToggle");
 darkModeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    showPopup("Dark mode toggled!");
+
+    // Save user preference in localStorage
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("theme", "dark");
+        showPopup("Dark mode enabled!");
+    } else {
+        localStorage.setItem("theme", "light");
+        showPopup("Light mode enabled!");
+    }
+});
+
+// Apply saved theme on page load
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+    }
 });
 
 // CHAT SUPPORT TOGGLE
