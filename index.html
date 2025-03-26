@@ -45,7 +45,21 @@
             <button type="submit">Send Message</button>
         </form>
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const chatToggle = document.getElementById("chatToggle");
+        const chatBox = document.getElementById("chatBox");
 
+        if (chatToggle && chatBox) {
+            chatToggle.addEventListener("click", () => {
+                chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+                console.log("Chat toggle clicked");
+            });
+        } else {
+            console.log("Chat elements not found on this page");
+        }
+    });
+</script>
     <footer>
         <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
     </footer>
