@@ -36,18 +36,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // GIFT CARD UPLOAD CONFIRMATION
-document.querySelectorAll(".giftcard-form").forEach(form => {
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        showPopup("Gift card submitted! We'll verify and process your request.");
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".giftcard-form").forEach(form => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            showPopup("Gift card submitted! We'll verify and process your request.");
+        });
     });
 });
 
 // BANK DETAILS SUBMISSION CONFIRMATION
-document.querySelectorAll(".bank-form").forEach(form => {
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        showPopup("Your bank details have been saved! Payment will be processed soon.");
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".bank-form").forEach(form => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            showPopup("Your bank details have been saved! Payment will be processed soon.");
+        });
     });
 });
 
