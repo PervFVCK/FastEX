@@ -22,16 +22,6 @@ function showPopup(message) {
     }, 3000);
 }
 
-// SWAP SUBMISSION CONFIRMATION
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".swap-form").forEach(form => {
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            showPopup("Your swap request has been submitted successfully! Wait for confirmation.");
-        });
-    });
-});
-
 // GIFT CARD UPLOAD CONFIRMATION
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".giftcard-form").forEach(form => {
@@ -63,15 +53,17 @@ function sendMessage() {
     }
 }
 
-// ADMIN RATE UPDATE SIMULATION (CAN BE CHANGED MANUALLY)
+// LOAD EXCHANGE RATES FROM ADMIN PANEL
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById('btcRate').textContent = "₦850,000 per BTC";
-    document.getElementById('ethRate').textContent = "₦300,000 per ETH";
-    document.getElementById('usdtRate').textContent = "₦1,250 per USDT";
-    document.getElementById('amazonRate').textContent = "₦72,000 per $100";
-    document.getElementById('steamRate').textContent = "₦66,000 per $100";
-    document.getElementById('googlePlayRate').textContent = "₦70,000 per $100";
-    document.getElementById('itunesRate').textContent = "₦71,000 per $100";
-    
-    showPopup("Rates updated successfully!");
+    function getRate(key, defaultValue) {
+        return localStorage.getItem(key) ? `₦${localStorage.getItem(key)}` : defaultValue;
+    }
+
+    document.getElementById("btcRate").textContent = getRate("btcRate", "Rate not set");
+    document.getElementById("ethRate").textContent = getRate("ethRate", "Rate not set");
+    document.getElementById("usdtRate").textContent = getRate("usdtRate", "Rate not set");
+    document.getElementById("amazonRate").textContent = getRate("amazonRate", "Rate not set");
+    document.getElementById("steamRate").textContent = getRate("steamRate", "Rate not set");
+    document.getElementById("googlePlayRate").textContent = getRate("googlePlayRate", "Rate not set");
+    document.getElementById("itunesRate").textContent = getRate("itunesRate", "Rate not set");
 });
