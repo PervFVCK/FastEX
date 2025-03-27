@@ -215,13 +215,37 @@
     <!-- Chat Support -->
     <div id="chatBox" class="hidden">
         <h3>Customer Support</h3>
-        <form onsubmit="sendEmail(event, this)">
+        <form id="chatForm">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <textarea name="message" placeholder="Type your message..." required></textarea>
             <button type="submit">Send Message</button>
         </form>
     </div>
+    <script>
+    emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+
+    document.getElementById("chatForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevents form from reloading the page
+
+        const formData = new FormData(this);
+        const templateParams = {
+            user_name: formData.get("name"),
+            user_email: formData.get("email"),
+            message: formData.get("message")
+        };
+
+        emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", templateParams)
+            .then(() => {
+                alert("Message sent successfully!");
+                document.getElementById("chatForm").reset();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to send message.");
+            });
+    });
+</script>
 
     <footer>
         <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
