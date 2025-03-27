@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swap Crypto & Gift Cards - FastSwap</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
     <script src="script.js" defer></script>
     <style>
         /* Enhance form appearance */
@@ -95,7 +96,7 @@
 
     <section id="cryptoSwap">
         <h2>Swap Cryptocurrency for Naira</h2>
-        <form action="process.php" method="POST" enctype="multipart/form-data">
+        <form onsubmit="sendEmail(event, this)">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
@@ -136,7 +137,7 @@
 
     <section id="giftCardSwap">
         <h2>Swap Gift Cards for Naira</h2>
-        <form action="process.php" method="POST" enctype="multipart/form-data">
+        <form onsubmit="sendEmail(event, this)">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
@@ -182,7 +183,7 @@
     <!-- Chat Support -->
     <div id="chatBox" class="hidden">
         <h3>Customer Support</h3>
-        <form action="https://formsubmit.co/tonyparcour1@gmail.com" method="POST">
+        <form onsubmit="sendEmail(event, this)">
             <input type="text" name="name" placeholder="Your Name" required>
             <input type="email" name="email" placeholder="Your Email" required>
             <textarea name="message" placeholder="Type your message..." required></textarea>
