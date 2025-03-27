@@ -6,6 +6,38 @@
     <title>Swap Crypto & Gift Cards - FastSwap</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+    <script>
+    emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+
+    function sendFormData(form, serviceID, templateID) {
+        const formData = new FormData(form);
+        const templateParams = {};
+        
+        formData.forEach((value, key) => {
+            templateParams[key] = value;
+        });
+
+        emailjs.send(serviceID, templateID, templateParams)
+            .then(() => {
+                alert("Request sent successfully!");
+                form.reset();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to send request.");
+            });
+    }
+
+    document.getElementById("cryptoForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        sendFormData(this, "YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID_CRYPTO");
+    });
+
+    document.getElementById("giftCardForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        sendFormData(this, "YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID_GIFTCARD");
+    });
+</script>
     <script src="script.js" defer></script>
     <style>
         /* Enhance form appearance */
@@ -96,7 +128,7 @@
 
     <section id="cryptoSwap">
         <h2>Swap Cryptocurrency for Naira</h2>
-        <form onsubmit="sendEmail(event, this)">
+        <form id="cryptoForm">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
@@ -137,7 +169,7 @@
 
     <section id="giftCardSwap">
         <h2>Swap Gift Cards for Naira</h2>
-        <form onsubmit="sendEmail(event, this)">
+        <form id="giftCardForm">
             <label for="name">Your Name:</label>
             <input type="text" name="name" placeholder="Enter your name" required>
 
