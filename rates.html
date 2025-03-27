@@ -6,6 +6,81 @@
     <title>Exchange Rates - FastSwap</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <style>
+        /* Enhance form appearance */
+        form {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #ff9800;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #2c2c2c;
+            color: #ffffff;
+            transition: 0.3s ease-in-out;
+            box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border: 2px solid #ff9800;
+            box-shadow: 0px 0px 10px rgba(255, 152, 0, 0.5);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            box-shadow: 0px 0px 10px rgba(255, 152, 0, 0.5);
+        }
+
+        input[type="file"] {
+            border: none;
+            padding: 10px;
+            background: #2c2c2c;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: #ff5722;
+        }
+    </style>
 </head>
 <body>
     <header>
