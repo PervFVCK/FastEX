@@ -112,7 +112,7 @@ function sendMail() {
         message: document.getElementById("message").value
     };
 
-    emailjs.send("service_jp4gq5l", "template_mg9won", parms)
+    emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
         .then(function(response) {
             alert("Email sent. You will receive a confirmation mail.");
         })
