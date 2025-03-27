@@ -105,3 +105,19 @@ function loadExchangeRates() {
     });
 }
 
+function sendMail() {
+    let parms = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value
+    };
+
+    emailjs.send("service_jp4gq5l", "template_mg9won", parms)
+        .then(function(response) {
+            alert("Email sent. You will receive a confirmation mail.");
+        })
+        .catch(function(error) {
+            alert("Failed to send email. Please try again.");
+            console.error("Error:", error);
+        });
+}
