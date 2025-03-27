@@ -1,6 +1,5 @@
+// CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
-    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Initialize EmailJS with your public key
-
     const chatToggle = document.getElementById("chatToggle");
     const chatBox = document.getElementById("chatBox");
 
@@ -19,7 +18,7 @@ function showPopup(message) {
     popup.classList.add("popup");
     popup.textContent = message;
     document.body.appendChild(popup);
-
+    
     setTimeout(() => {
         popup.remove();
     }, 3000);
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".giftcard-form").forEach(form => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
-            sendEmail(form);
             const transaction = {
                 type: "Gift Card",
                 status: "Pending",
@@ -47,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".bank-form").forEach(form => {
         form.addEventListener("submit", (event) => {
             event.preventDefault();
-            sendEmail(form);
             showPopup("Your bank details have been saved! Payment will be processed soon.");
         });
     });
@@ -64,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const message = chatMessageInput.value.trim();
             if (message !== "") {
                 saveChatMessage("Customer", message);
-                sendEmail(chatForm);
                 showPopup("Your message has been sent! Expect a response soon.");
                 chatMessageInput.value = "";
             } else {
@@ -109,22 +105,3 @@ function loadExchangeRates() {
     });
 }
 
-// EMAILJS FUNCTION
-function sendEmail(form) {
-    const formData = new FormData(form);
-    const emailParams = {};
-
-    formData.forEach((value, key) => {
-        emailParams[key] = value;
-    });
-
-    emailjs.send("service_7j6gvqq", "template_iebj59i", emailParams)
-        .then(response => {
-            alert("Your request has been submitted successfully! Check your email for confirmation.");
-            form.reset();
-        })
-        .catch(error => {
-            console.error("EmailJS Error:", error);
-            alert("An error occurred while sending your request.");
-        });
-}
