@@ -223,7 +223,7 @@
         </form>
     </div>
     <script>
-    emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
 
     document.getElementById("chatForm").addEventListener("submit", function (e) {
         e.preventDefault(); // Prevents form from reloading the page
@@ -235,7 +235,7 @@
             message: formData.get("message")
         };
 
-        emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", templateParams)
+        emailjs.send("service_7j6gvqq", "template_2y372x7", templateParams)
             .then(() => {
                 alert("Message sent successfully!");
                 document.getElementById("chatForm").reset();
