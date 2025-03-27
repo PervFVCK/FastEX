@@ -5,63 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swap Crypto & Gift Cards - FastSwap</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-    <script>
-    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
 
-    function sendFormData(form, serviceID, templateID) {
-        const formData = new FormData(form);
-        const templateParams = {};
-        
-        formData.forEach((value, key) => {
-            templateParams[key] = value;
-        });
-
-        emailjs.send(serviceID, templateID, templateParams)
-            .then(() => {
-                alert("Request sent successfully!");
-                form.reset();
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Failed to send request.");
-            });
-    }
-
-    document.getElementById("cryptoForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        sendFormData(this, "service_7j6gvqq", "YOUR_EMAILJS_TEMPLATE_ID_CRYPTO");
-    });
-
-    document.getElementById("giftCardForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        sendFormData(this, "YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID_GIFTCARD");
-    });
-</script>
-    <script>
-    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
-
-    document.getElementById("chatForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevents form from reloading the page
-
-        const formData = new FormData(this);
-        const templateParams = {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            message: formData.get("message")
-        };
-
-        emailjs.send("service_7j6gvqq", "template_2y372x7", templateParams)
-            .then(() => {
-                alert("Message sent successfully!");
-                document.getElementById("chatForm").reset();
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Failed to send message.");
-            });
-    });
-    </script>
 
     <script src="script.js" defer></script>
     <style>
@@ -241,10 +185,10 @@
     <div id="chatBox" class="hidden">
         <h3>Customer Support</h3>
         <form id="chatForm">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" placeholder="Type your message..." required></textarea>
-            <button type="submit">Send Message</button>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <textarea id="message" name="message" placeholder="Type your message..." required></textarea>
+            <button type="submit" onclick="sendMail()">Send Message</button>
         </form>
     </div>
     
