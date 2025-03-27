@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
     <script>
-    emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
 
     function sendFormData(form, serviceID, templateID) {
         const formData = new FormData(form);
@@ -30,7 +30,7 @@
 
     document.getElementById("cryptoForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        sendFormData(this, "YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID_CRYPTO");
+        sendFormData(this, "service_7j6gvqq", "YOUR_EMAILJS_TEMPLATE_ID_CRYPTO");
     });
 
     document.getElementById("giftCardForm").addEventListener("submit", function (e) {
@@ -38,6 +38,31 @@
         sendFormData(this, "YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID_GIFTCARD");
     });
 </script>
+    <script>
+    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
+
+    document.getElementById("chatForm").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevents form from reloading the page
+
+        const formData = new FormData(this);
+        const templateParams = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            message: formData.get("message")
+        };
+
+        emailjs.send("service_7j6gvqq", "template_2y372x7", templateParams)
+            .then(() => {
+                alert("Message sent successfully!");
+                document.getElementById("chatForm").reset();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Failed to send message.");
+            });
+    });
+    </script>
+
     <script src="script.js" defer></script>
     <style>
         /* Enhance form appearance */
@@ -222,30 +247,7 @@
             <button type="submit">Send Message</button>
         </form>
     </div>
-    <script>
-    emailjs.init("23FmtaZ8HQsRcgUQ_"); // Replace with your EmailJS Public Key
-
-    document.getElementById("chatForm").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevents form from reloading the page
-
-        const formData = new FormData(this);
-        const templateParams = {
-            user_name: formData.get("name"),
-            user_email: formData.get("email"),
-            message: formData.get("message")
-        };
-
-        emailjs.send("service_7j6gvqq", "template_2y372x7", templateParams)
-            .then(() => {
-                alert("Message sent successfully!");
-                document.getElementById("chatForm").reset();
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("Failed to send message.");
-            });
-    });
-</script>
+    
 
     <footer>
         <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
