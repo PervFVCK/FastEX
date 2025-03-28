@@ -26,12 +26,29 @@
         <button onclick="updateRates()">Update Rates</button>
     </section>
 
+    
+
     <!-- Pending Transactions -->
-    <section id="transactions">
-        <h2>Pending Transactions</h2>
-        <ul id="pendingTransactions">
-            <li>No pending transactions.</li>
-        </ul>
+    <section id="swapRequests">
+        <table id="swapRequestsTable" border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Amount/Value</th>
+            <th>Bank Name</th>
+            <th>Account Number</th>
+            <th>Gift Card Code</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody id="swapRequestsBody">
+        <!-- Data will be inserted here -->
+    </tbody>
+</table>
+
+<button onclick="fetchSwapRequests()">Refresh Requests</button>
     </section>
 
     <!-- Completed Transactions -->
