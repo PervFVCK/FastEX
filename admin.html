@@ -148,15 +148,28 @@ function updateStatus(transactionID, status) {
     let statusCell = document.getElementById(`status-${transactionID}`);
     statusCell.innerText = status;
 
-    fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [{ Status: status }] })
-    })
-    .then(() => alert(`Transaction updated to: ${status}`))
-    .catch(error => console.error("Error updating status:", error));
-}
+    // Search for the exact transaction ID first
+    fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0) {
+            let rowId = data[0].id; // Get the correct row ID in Google Sheets
 
+            // Update the status in Google Sheets using the row ID
+            fetch(`${SHEETDB_API_URL}/id/${rowId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: [{ Status: status }] })
+            })
+            .then(() => alert(`Transaction updated to: ${status}`))
+            .catch(error => console.error("Error updating status:", error));
+        } else {
+            console.error("Transaction not found in SheetDB");
+        }
+    })
+    .catch(error => console.error("Error searching for transaction:", error));
+}
+    
 // Load transactions on page load
 loadTransactions();
 </script>
