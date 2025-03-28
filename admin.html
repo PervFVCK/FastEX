@@ -6,6 +6,13 @@
     <title>Admin Dashboard - FastSwap</title>
     <link rel="stylesheet" href="admin-style.css">
     <script src="admin-script.js" defer></script>
+        
+<style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid black; text-align: center; }
+        th { background: #f4f4f4; }
+        button { padding: 5px 10px; cursor: pointer; }
+    </style>
 </head>
 <body>
     <header>
@@ -26,38 +33,83 @@
         <button onclick="updateRates()">Update Rates</button>
     </section>
 
-    
 
-    <!-- Pending Transactions -->
-    <section id="swapRequests">
-        <table id="swapRequestsTable" border="1">
+
+<table>
     <thead>
         <tr>
+            <th>Date</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Type</th>
-            <th>Amount/Value</th>
+            <th>Crypto/Gift Card Type</th>
+            <th>Amount</th>
             <th>Bank Name</th>
             <th>Account Number</th>
-            <th>Gift Card Code</th>
-            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
         </tr>
     </thead>
-    <tbody id="swapRequestsBody">
-        <!-- Data will be inserted here -->
-    </tbody>
+    <tbody id="transactionsTable"></tbody>
 </table>
 
-<button onclick="fetchSwapRequests()">Refresh Requests</button>
-    </section>
+<script>
+// SheetDB API URL
+const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    <!-- Completed Transactions -->
-    <section id="completedTransactionsSection">
-        <h2>Completed Transactions</h2>
-        <ul id="completedTransactions">
-            <li>No completed transactions.</li>
-        </ul>
-    </section>
+// Fetch transactions from Google Sheets
+function loadTransactions() {
+    fetch(SHEETDB_API_URL)
+    .then(response => response.json())
+    .then(data => {
+        let table = document.getElementById("transactionsTable");
+        table.innerHTML = ""; // Clear table
+
+        data.forEach((row, index) => {
+            let transactionID = row.Email.replace(/[@.]/g, "_"); // Use email as unique identifier
+            let tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${row.Date}</td>
+                <td>${row.Name}</td>
+                <td>${row.Email}</td>
+                <td>${row["Crypto Type"] || row["Gift Card Type"]}</td>
+                <td>${row.Amount || row["Gift Card Value"]}</td>
+                <td>${row["Bank Name"]}</td>
+                <td>${row["Account Number"]}</td>
+                <td id="status-${transactionID}">${row.Status || "Pending"}</td>
+                <td>
+                    <button onclick="updateStatus('${row.Email}', 'Approved', '${transactionID}')">Approve</button>
+                    <button onclick="updateStatus('${row.Email}', 'Rejected', '${transactionID}')">Reject</button>
+                </td>
+            `;
+
+            table.appendChild(tr);
+        });
+    })
+    .catch(error => console.error("Error loading transactions:", error));
+}
+
+// Update transaction status
+function updateStatus(email, status, transactionID) {
+    let statusCell = document.getElementById(`status-${transactionID}`);
+    statusCell.innerText = status;
+
+    fetch(`${SHEETDB_API_URL}/Email/${encodeURIComponent(email)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [{ Status: status }] })
+    })
+    .then(() => alert(`Transaction updated to: ${status}`))
+    .catch(error => console.error("Error updating status:", error));
+}
+
+// Load transactions on page load
+loadTransactions();
+</script>
+
+
+
+
 
     <!-- Customer Messages -->
     <section id="customerSupport">
