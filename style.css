@@ -143,23 +143,18 @@ th {
 
 /* FLOATING CHAT BUTTON */
 #chatToggle {
-    position: absolute;  /* Change to absolute */
-    left: 85%; /* Start position */
-    top: 90%; /* Start position */
-    transform: translate(-50%, -50%);
+    position: fixed;
+    bottom: 20px;  /* This keeps it 20px from the bottom */
+    right: 20px;
     background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
     padding: 14px;
     border-radius: 50%;
     border: none;
-    cursor: grab;
+    cursor: pointer;
     font-size: 1.5rem;
     box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
 }
-
-#chatToggle:active {
-    cursor: grabbing;
-    }
 /* FOOTER */
 footer {
     width: 100%;
