@@ -137,99 +137,98 @@ function sendMail() {
 }
 
 function sendCryptoSwap() {
-        let isValid = validateForm("cryptoForm");
-        if (!isValid) return;
+    let name = document.getElementById("cryptoName");
+    let email = document.getElementById("cryptoEmail");
+    let cryptoType = document.getElementById("cryptoType");
+    let amount = document.getElementById("cryptoAmount");
+    let bankName = document.getElementById("cryptoBankName");
+    let accountNumber = document.getElementById("cryptoAccountNumber");
 
-        let parms = {
-            name: document.getElementById("cryptoName").value,
-            email: document.getElementById("cryptoEmail").value,
-            cryptoType: document.getElementById("cryptoType").value,
-            amount: document.getElementById("cryptoAmount").value,
-            bankName: document.getElementById("cryptoBankName").value,
-            accountNumber: document.getElementById("cryptoAccountNumber").value
-        };
+    // Reset previous error styles
+    [name, email, cryptoType, amount, bankName, accountNumber].forEach(field => field.style.border = "");
 
-        emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
-            .then(function(response) {
-                alert("Crypto swap request sent successfully! You will receive a confirmation email.");
-                document.getElementById("cryptoForm").reset();
-                clearErrors("cryptoForm");
-            })
-            .catch(function(error) {
-                alert("Failed to send request. Please try again.");
-                console.error("Error:", error);
-            });
-    }
+    // Validate required fields
+    if (!name.value.trim()) return showError(name, "Please enter your name.");
+    if (!email.value.trim()) return showError(email, "Please enter your email.");
+    if (!cryptoType.value) return showError(cryptoType, "Please select a cryptocurrency.");
+    if (!amount.value.trim()) return showError(amount, "Please enter an amount.");
+    if (!bankName.value.trim()) return showError(bankName, "Please enter your bank name.");
+    if (!accountNumber.value.trim()) return showError(accountNumber, "Please enter your account number.");
 
-    function sendGiftCardSwap() {
-        let isValid = validateForm("giftCardForm");
-        if (!isValid) return;
+    // Validate email format
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) return showError(email, "Please enter a valid email address.");
 
-        let parms = {
-            name: document.getElementById("giftCardName").value,
-            email: document.getElementById("giftCardEmail").value,
-            giftCardType: document.getElementById("giftCardType").value,
-            giftCardValue: document.getElementById("giftCardValue").value,
-            giftCardCode: document.getElementById("giftCardCode").value,
-            bankName: document.getElementById("giftCardBankName").value,
-            accountNumber: document.getElementById("giftCardAccountNumber").value
-        };
+    let params = {
+        name: name.value.trim(),
+        email: email.value.trim(),
+        cryptoType: cryptoType.value,
+        amount: amount.value.trim(),
+        bankName: bankName.value.trim(),
+        accountNumber: accountNumber.value.trim()
+    };
 
-        emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
-            .then(function(response) {
-                alert("Gift card swap request sent successfully! You will receive a confirmation email.");
-                document.getElementById("giftCardForm").reset();
-                clearErrors("giftCardForm");
-            })
-            .catch(function(error) {
-                alert("Failed to send request. Please try again.");
-                console.error("Error:", error);
-            });
-    }
+    emailjs.send("service_7j6gvqq", "template_2y372x7", params)
+        .then(response => {
+            console.log("Email sent:", response);
+            alert("Email sent successfully!");
+            document.getElementById("cryptoForm").reset();
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            alert("Failed to send email. Please try again.");
+        });
+}
 
-    // Form validation function
-    function validateForm(formId) {
-        let form = document.getElementById(formId);
-        let inputs = form.getElementsByTagName("input");
-        let isValid = true;
+function sendGiftCardSwap() {
+    let name = document.getElementById("giftCardName");
+    let email = document.getElementById("giftCardEmail");
+    let giftCardType = document.getElementById("giftCardType");
+    let giftCardValue = document.getElementById("giftCardValue");
+    let giftCardCode = document.getElementById("giftCardCode");
+    let bankName = document.getElementById("giftCardBankName");
+    let accountNumber = document.getElementById("giftCardAccountNumber");
 
-        clearErrors(formId);
+    // Reset previous error styles
+    [name, email, giftCardType, giftCardValue, bankName, accountNumber].forEach(field => field.style.border = "");
 
-        for (let input of inputs) {
-            if (input.hasAttribute("required") && !input.value.trim()) {
-                showError(input, "This field is required");
-                isValid = false;
-            }
-            if (input.type === "email" && !validateEmail(input.value)) {
-                showError(input, "Enter a valid email");
-                isValid = false;
-            }
-        }
+    // Validate required fields
+    if (!name.value.trim()) return showError(name, "Please enter your name.");
+    if (!email.value.trim()) return showError(email, "Please enter your email.");
+    if (!giftCardType.value) return showError(giftCardType, "Please select a gift card type.");
+    if (!giftCardValue.value.trim()) return showError(giftCardValue, "Please enter the gift card value.");
+    if (!bankName.value.trim()) return showError(bankName, "Please enter your bank name.");
+    if (!accountNumber.value.trim()) return showError(accountNumber, "Please enter your account number.");
 
-        return isValid;
-    }
+    // Validate email format
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email.value.trim())) return showError(email, "Please enter a valid email address.");
 
-    // Function to validate email format
-    function validateEmail(email) {
-        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    }
+    let params = {
+        name: name.value.trim(),
+        email: email.value.trim(),
+        giftCardType: giftCardType.value,
+        giftCardValue: giftCardValue.value.trim(),
+        giftCardCode: giftCardCode.value.trim(),
+        bankName: bankName.value.trim(),
+        accountNumber: accountNumber.value.trim()
+    };
 
-    // Function to show error message near the field
-    function showError(input, message) {
-        let error = document.createElement("span");
-        error.className = "error-message";
-        error.style.color = "red";
-        error.style.fontSize = "12px";
-        error.innerText = message;
-        input.parentNode.appendChild(error);
-    }
+    emailjs.send("service_7j6gvqq", "template_2y372x7", params)
+        .then(response => {
+            console.log("Email sent:", response);
+            alert("Email sent successfully!");
+            document.getElementById("giftCardForm").reset();
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            alert("Failed to send email. Please try again.");
+        });
+}
 
-    // Function to clear previous error messages
-    function clearErrors(formId) {
-        let form = document.getElementById(formId);
-        let errors = form.getElementsByClassName("error-message");
-        while (errors.length > 0) {
-            errors[0].parentNode.removeChild(errors[0]);
-        }
-    }
+// Helper function to highlight the error field
+function showError(field, message) {
+    field.style.border = "2px solid red";  // Highlight field in red
+    field.focus();
+    alert(message);
+}
