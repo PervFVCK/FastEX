@@ -136,7 +136,14 @@ function sendMail() {
         });
 }
 
-  // Function to show the animated pop-up
+// Helper function to highlight the error field
+function showError(field, message) {
+    field.style.border = "2px solid red";  
+    field.focus();
+    alert(message);
+}
+
+// Function to show the animated pop-up
 function showPopup(message, success = true) {
     let popup = document.createElement("div");
     popup.innerText = message;
@@ -152,7 +159,7 @@ function showPopup(message, success = true) {
     popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
     popup.style.cursor = "pointer";
     popup.style.zIndex = "1000";
-    
+
     // Close pop-up on click
     popup.onclick = function () {
         document.body.removeChild(popup);
@@ -161,7 +168,7 @@ function showPopup(message, success = true) {
     document.body.appendChild(popup);
 }
 
-// Function to send crypto swap email
+// Function to send crypto swap email and update Google Sheet
 function sendCryptoSwap() {
     let name = document.getElementById("cryptoName");
     let email = document.getElementById("cryptoEmail");
@@ -191,6 +198,7 @@ function sendCryptoSwap() {
         accountNumber: accountNumber.value.trim()
     };
 
+    // Send email
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             showPopup("Request Sent! You will receive a confirmation email.", true);
@@ -200,9 +208,17 @@ function sendCryptoSwap() {
             showPopup("Error Occurred! Please try again", false);
             console.error("Error sending email:", error);
         });
+
+    // Update Google Sheet via SheetDB
+    fetch("https://sheetdb.io/api/v1/bzeh6nxauqyqb", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: { ...params, date: new Date().toLocaleString() } })
+    })
+    .catch(error => console.error("Error updating Google Sheet:", error));
 }
 
-// Function to send gift card swap email
+// Function to send gift card swap email and update Google Sheet
 function sendGiftCardSwap() {
     let name = document.getElementById("giftCardName");
     let email = document.getElementById("giftCardEmail");
@@ -234,6 +250,7 @@ function sendGiftCardSwap() {
         accountNumber: accountNumber.value.trim()
     };
 
+    // Send email
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             showPopup("Request Sent! You will receive a confirmation email.", true);
@@ -243,6 +260,14 @@ function sendGiftCardSwap() {
             showPopup("Error Occurred! Please try again", false);
             console.error("Error sending email:", error);
         });
+
+    // Update Google Sheet via SheetDB
+    fetch("https://sheetdb.io/api/v1/bzeh6nxauqyqb", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: { ...params, date: new Date().toLocaleString() } })
+    })
+    .catch(error => console.error("Error updating Google Sheet:", error));
 }
 
 // Helper function to highlight the error field
