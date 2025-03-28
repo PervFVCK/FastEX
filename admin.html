@@ -37,6 +37,7 @@
 
 
      
+
     <table>
         <thead>
             <tr>
@@ -74,47 +75,35 @@ function loadTransactions() {
         let table = document.getElementById("transactionsTable");
         table.innerHTML = ""; // Clear table
 
-        let transactionsToUpdate = []; // Store transactions that need IDs
-        let transactionCount = {}; // Track duplicate transactions
-        let existingIDs = {}; // Store existing transaction IDs to prevent conflicts
+        let transactionsToUpdate = []; // Store transactions that need ID updates
+        let existingIDs = new Set(); // Store existing Transaction IDs
 
         data.forEach((row) => {
-            let transactionKey = `${row.Email}-${row.Date}-${row.Amount}`;
             let transactionID = row["Transaction ID"];
 
-            if (!transactionCount[transactionKey]) {
-                transactionCount[transactionKey] = 0;
-            }
-            transactionCount[transactionKey]++;
+            // If transaction already has a unique ID, use it.
+            if (transactionID) {
+                existingIDs.add(transactionID);
+            } else {
+                // Generate a new unique ID and ensure no duplicates
+                let newID;
+                do {
+                    newID = generateUUID();
+                } while (existingIDs.has(newID)); // Ensure ID is unique
+                existingIDs.add(newID);
 
-            // Generate or adjust transaction ID
-            if (!transactionID) {
-                transactionID = generateUUID();
-            }
-
-            let uniqueTransactionID = transactionID;
-            if (transactionCount[transactionKey] > 1) {
-                uniqueTransactionID = `${transactionID}-${transactionCount[transactionKey] - 1}`;
-            }
-
-            // Ensure unique ID
-            while (existingIDs[uniqueTransactionID]) {
-                transactionCount[transactionKey]++;
-                uniqueTransactionID = `${transactionID}-${transactionCount[transactionKey] - 1}`;
-            }
-            existingIDs[uniqueTransactionID] = true;
-
-            // Prepare for batch update in Google Sheets
-            if (transactionID !== uniqueTransactionID) {
+                // Store this for updating Google Sheets
                 transactionsToUpdate.push({
                     search: { Email: row.Email, Date: row.Date, Amount: row.Amount },
-                    update: { "Transaction ID": uniqueTransactionID }
+                    update: { "Transaction ID": newID }
                 });
+
+                transactionID = newID;
             }
 
             let tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${uniqueTransactionID}</td>
+                <td>${transactionID}</td>
                 <td>${row.Date}</td>
                 <td>${row.Name}</td>
                 <td>${row.Email}</td>
@@ -122,10 +111,10 @@ function loadTransactions() {
                 <td>${row.Amount || row["Gift Card Value"]}</td>
                 <td>${row["Bank Name"]}</td>
                 <td>${row["Account Number"]}</td>
-                <td id="status-${uniqueTransactionID}">${row.Status || "Pending"}</td>
+                <td id="status-${transactionID}">${row.Status || "Pending"}</td>
                 <td>
-                    <button onclick="updateStatus('${uniqueTransactionID}', 'Approved')">Approve</button>
-                    <button onclick="updateStatus('${uniqueTransactionID}', 'Rejected')">Reject</button>
+                    <button onclick="updateStatus('${transactionID}', 'Approved')">Approve</button>
+                    <button onclick="updateStatus('${transactionID}', 'Rejected')">Reject</button>
                 </td>
             `;
 
@@ -161,6 +150,7 @@ function updateStatus(transactionID, status) {
 // Load transactions on page load
 loadTransactions();
 </script>
+
     
   <section id="customerSupport">
         <h2>Customer Messages</h2>
