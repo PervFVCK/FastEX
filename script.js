@@ -105,21 +105,19 @@ function loadExchangeRates() {
     });
 }
 
-function sendMail(event) {
-    event.preventDefault(); // Prevent form submission
-
+function sendMail() {
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
     let message = document.getElementById("message").value.trim();
 
-    // Email format regex pattern
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!name || !email || !message) {
-        alert("Please fill out all required fields.");
-        return;
+    // Validate fields
+    if (name === "" || email === "" || message === "") {
+        alert("Please fill out all fields.");
+        return; // Stop function if validation fails
     }
 
+    // Validate email format
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
         alert("Please enter a valid email address.");
         return;
@@ -128,10 +126,13 @@ function sendMail(event) {
     let params = { name, email, message };
 
     emailjs.send("service_7j6gvqq", "template_2hs3cki", params)
-        .then(() => alert("Your request is being processed. You will receive a confirmation mail."))
-        .catch((error) => {
-            alert("An error occurred. Please try again.");
-            console.error("Error:", error);
+        .then(response => {
+            console.log("Email sent:", response);
+            alert("Email sent successfully!");
+        })
+        .catch(error => {
+            console.error("Error sending email:", error);
+            alert("Failed to send email. Please try again.");
         });
 }
 
