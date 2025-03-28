@@ -1,15 +1,12 @@
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", function () {
     const chatToggle = document.getElementById("chatToggle");
     const chatBox = document.getElementById("chatBox");
 
-    if (chatToggle && chatBox) {
-        chatToggle.addEventListener("click", () => {
-            chatBox.classList.toggle("hidden");
-        });
-    }
+    chatToggle.addEventListener("click", function () {
+        chatBox.classList.toggle("show"); // Show/hide chat box
+    });
 });
-
     
 
 // POPUP FUNCTION
