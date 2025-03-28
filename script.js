@@ -143,7 +143,7 @@ function showError(field, message) {
     alert(message);
 }
 
-// Function to show the animated pop-up
+/// Function to show the animated pop-up
 function showPopup(message, success = true) {
     let popup = document.createElement("div");
     popup.innerText = message;
@@ -159,7 +159,7 @@ function showPopup(message, success = true) {
     popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
     popup.style.cursor = "pointer";
     popup.style.zIndex = "1000";
-
+    
     // Close pop-up on click
     popup.onclick = function () {
         document.body.removeChild(popup);
@@ -168,7 +168,7 @@ function showPopup(message, success = true) {
     document.body.appendChild(popup);
 }
 
-// Function to send crypto swap email and update Google Sheet
+// Function to send crypto swap email and update SheetDB
 function sendCryptoSwap() {
     let name = document.getElementById("cryptoName");
     let email = document.getElementById("cryptoEmail");
@@ -198,7 +198,7 @@ function sendCryptoSwap() {
         accountNumber: accountNumber.value.trim()
     };
 
-    // Send email
+    // Send email via EmailJS
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             showPopup("Request Sent! You will receive a confirmation email.", true);
@@ -210,15 +210,24 @@ function sendCryptoSwap() {
         });
 
     // Update Google Sheet via SheetDB
+    let sheetData = {
+        "Date": new Date().toISOString().split('T')[0],
+        "Name": name.value.trim(),
+        "Email": email.value.trim(),
+        "Crypto Type": cryptoType.value,
+        "Amount": amount.value.trim(),
+        "Bank Name": bankName.value.trim(),
+        "Account Number": accountNumber.value.trim()
+    };
+
     fetch("https://sheetdb.io/api/v1/bzeh6nxauqyqb", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: { ...params, date: new Date().toLocaleString() } })
-    })
-    .catch(error => console.error("Error updating Google Sheet:", error));
+        body: JSON.stringify(sheetData)
+    }).catch(error => console.error("Error updating Google Sheet:", error));
 }
 
-// Function to send gift card swap email and update Google Sheet
+// Function to send gift card swap email and update SheetDB
 function sendGiftCardSwap() {
     let name = document.getElementById("giftCardName");
     let email = document.getElementById("giftCardEmail");
@@ -250,7 +259,7 @@ function sendGiftCardSwap() {
         accountNumber: accountNumber.value.trim()
     };
 
-    // Send email
+    // Send email via EmailJS
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             showPopup("Request Sent! You will receive a confirmation email.", true);
@@ -262,12 +271,21 @@ function sendGiftCardSwap() {
         });
 
     // Update Google Sheet via SheetDB
+    let sheetData = {
+        "Date": new Date().toISOString().split('T')[0],
+        "Name": name.value.trim(),
+        "Email": email.value.trim(),
+        "Crypto Type": giftCardType.value, // Same column as Crypto Type
+        "Amount": giftCardValue.value.trim(),
+        "Bank Name": bankName.value.trim(),
+        "Account Number": accountNumber.value.trim()
+    };
+
     fetch("https://sheetdb.io/api/v1/bzeh6nxauqyqb", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: { ...params, date: new Date().toLocaleString() } })
-    })
-    .catch(error => console.error("Error updating Google Sheet:", error));
+        body: JSON.stringify(sheetData)
+    }).catch(error => console.error("Error updating Google Sheet:", error));
 }
 
 // Helper function to highlight the error field
