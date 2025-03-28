@@ -153,13 +153,13 @@ th {
     padding: 5px;
 }
 
-#chatBox button {
-    width: 100%;
-    background: #007bff;
+#chatForm button {
+    background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 #chatBox button:hover {
