@@ -121,3 +121,44 @@ function sendMail() {
             console.error("Error:", error);
         });
 }
+
+function sendCryptoSwap() {
+        let parms = {
+            name: document.getElementById("cryptoName").value,
+            email: document.getElementById("cryptoEmail").value,
+            cryptoType: document.getElementById("cryptoType").value,
+            amount: document.getElementById("cryptoAmount").value,
+            bankName: document.getElementById("cryptoBankName").value,
+            accountNumber: document.getElementById("cryptoAccountNumber").value
+        };
+
+        emailjs.send("service_7j6gvqq", "YOUR_CRYPTO_TEMPLATE_ID", parms)
+            .then(function(response) {
+                alert("Email sent. You will receive a confirmation mail.");
+            })
+            .catch(function(error) {
+                alert("Failed to send email. Please try again.");
+                console.error("Error:", error);
+            });
+    }
+
+    function sendGiftCardSwap() {
+        let parms = {
+            name: document.getElementById("giftCardName").value,
+            email: document.getElementById("giftCardEmail").value,
+            giftCardType: document.getElementById("giftCardType").value,
+            giftCardValue: document.getElementById("giftCardValue").value,
+            giftCardCode: document.getElementById("giftCardCode").value,
+            bankName: document.getElementById("giftCardBankName").value,
+            accountNumber: document.getElementById("giftCardAccountNumber").value
+        };
+
+        emailjs.send("service_7j6gvqq", "YOUR_GIFTCARD_TEMPLATE_ID", parms)
+            .then(function(response) {
+                alert("Email sent. You will receive a confirmation mail.");
+            })
+            .catch(function(error) {
+                alert("Failed to send email. Please try again.");
+                console.error("Error:", error);
+            });
+    }
