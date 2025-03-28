@@ -33,7 +33,6 @@
         <button onclick="updateRates()">Update Rates</button>
     </section>
 
-    <table>
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -52,9 +51,10 @@
     </table>
 
     <script>
+    // SheetDB API URL
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    // Generate a unique Transaction ID (UUID format)
+    // Function to generate a unique UUID for Transaction ID
     function generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
@@ -63,20 +63,22 @@
         });
     }
 
+    // Fetch transactions from Google Sheets
     function loadTransactions() {
         fetch(SHEETDB_API_URL)
         .then(response => response.json())
         .then(data => {
             let table = document.getElementById("transactionsTable");
-            table.innerHTML = ""; // Clear table
+            table.innerHTML = ""; // Clear table before reloading
 
-            data.forEach((row, index) => {
-                let transactionID = row["Transaction ID"];
+            data.forEach((row) => {
+                let rowID = row["id"]; // Unique ID in Google Sheets
+                let transactionID = row["Transaction ID"] || generateUUID();
+                let status = row["Status"] || "Pending"; // Get stored status
 
-                // If transaction has no ID, generate one and update it in Google Sheets
-                if (!transactionID) {
-                    transactionID = generateUUID();
-                    fetch(`${SHEETDB_API_URL}/search?Email=${encodeURIComponent(row.Email)}`, {
+                // If transaction has no ID, update it in Google Sheets
+                if (!row["Transaction ID"]) {
+                    fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ data: [{ "Transaction ID": transactionID }] })
@@ -93,10 +95,10 @@
                     <td>${row.Amount || row["Gift Card Value"]}</td>
                     <td>${row["Bank Name"]}</td>
                     <td>${row["Account Number"]}</td>
-                    <td id="status-${transactionID}">${row.Status || "Pending"}</td>
+                    <td id="status-${rowID}">${status}</td>
                     <td>
-                        <button onclick="updateStatus('${transactionID}', 'Approved')">Approve</button>
-                        <button onclick="updateStatus('${transactionID}', 'Rejected')">Reject</button>
+                        <button onclick="updateStatus('${rowID}', 'Approved')">Approve</button>
+                        <button onclick="updateStatus('${rowID}', 'Rejected')">Reject</button>
                     </td>
                 `;
 
@@ -106,11 +108,12 @@
         .catch(error => console.error("Error loading transactions:", error));
     }
 
-    function updateStatus(transactionID, status) {
-        let statusCell = document.getElementById(`status-${transactionID}`);
-        statusCell.innerText = status;
+    // Update transaction status using row ID
+    function updateStatus(rowID, status) {
+        let statusCell = document.getElementById(`status-${rowID}`);
+        statusCell.innerText = status; // Update UI immediately
 
-        fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
+        fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: [{ Status: status }] })
@@ -123,6 +126,7 @@
     loadTransactions();
     </script>
 
+    
     <!-- Customer Messages -->
     <section id="customerSupport">
         <h2>Customer Messages</h2>
