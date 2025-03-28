@@ -37,7 +37,7 @@
 
 
 
-    <table>
+<table>
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -54,18 +54,20 @@
         </thead>
         <tbody id="transactionsTable"></tbody>
     </table>
+
 <script>
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
 // Generate a unique Transaction ID (UUID format)
 function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0,
             v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
 
+// Load transactions
 function loadTransactions() {
     fetch(SHEETDB_API_URL)
     .then(response => response.json())
@@ -73,16 +75,16 @@ function loadTransactions() {
         let table = document.getElementById("transactionsTable");
         table.innerHTML = ""; // Clear table
 
-        let transactionsToUpdate = []; // Array to store transactions that need IDs
+        let transactionsToUpdate = []; // Store transactions that need unique IDs
 
         data.forEach((row) => {
             let transactionID = row["Transaction ID"];
 
-            // If transaction has no ID, generate one and prepare for batch update
+            // Ensure each transaction has a unique ID based on email & timestamp
             if (!transactionID) {
                 transactionID = generateUUID();
                 transactionsToUpdate.push({
-                    search: { Email: row.Email, Date: row.Date }, // Search by Email & Date to ensure correct row
+                    search: { Email: row.Email, Date: row.Date, Amount: row.Amount },
                     update: { "Transaction ID": transactionID }
                 });
             }
@@ -107,7 +109,7 @@ function loadTransactions() {
             table.appendChild(tr);
         });
 
-        // Perform batch update to fix missing transaction IDs in Google Sheets
+        // Update Google Sheets with missing Transaction IDs
         if (transactionsToUpdate.length > 0) {
             fetch(SHEETDB_API_URL, {
                 method: "PATCH",
@@ -120,6 +122,7 @@ function loadTransactions() {
     .catch(error => console.error("Error loading transactions:", error));
 }
 
+// Update transaction status
 function updateStatus(transactionID, status) {
     let statusCell = document.getElementById(`status-${transactionID}`);
     statusCell.innerText = status;
@@ -136,6 +139,7 @@ function updateStatus(transactionID, status) {
 // Load transactions on page load
 loadTransactions();
 </script>
+
 
   <section id="customerSupport">
         <h2>Customer Messages</h2>
