@@ -63,9 +63,10 @@ nav a:hover {
     background: linear-gradient(90deg, #00ffff, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
 }
 
-.hero p {
+#hero p {
     font-size: 18px;
     color: #333; /* Dark gray for readability */
     text-align: center;
@@ -77,6 +78,7 @@ nav a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* Gradient text effect */
     font-weight: bold;
+    margin-bottom: 15px;
 }
 .cta-button {
     display: inline-block;
