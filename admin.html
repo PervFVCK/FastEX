@@ -36,7 +36,8 @@
 
 
 
-     <table>
+     
+    <table>
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -123,8 +124,8 @@ function loadTransactions() {
                 <td>${row["Account Number"]}</td>
                 <td id="status-${uniqueTransactionID}">${row.Status || "Pending"}</td>
                 <td>
-                    <button onclick="updateStatus('${uniqueTransactionID}', '${row.Email}', '${row.Date}', '${row.Amount}', 'Approved')">Approve</button>
-                    <button onclick="updateStatus('${uniqueTransactionID}', '${row.Email}', '${row.Date}', '${row.Amount}', 'Rejected')">Reject</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', 'Approved')">Approve</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', 'Rejected')">Reject</button>
                 </td>
             `;
 
@@ -144,32 +145,16 @@ function loadTransactions() {
     .catch(error => console.error("Error loading transactions:", error));
 }
 
-function updateStatus(transactionID, email, date, amount, status) {
+function updateStatus(transactionID, status) {
     let statusCell = document.getElementById(`status-${transactionID}`);
     statusCell.innerText = status;
 
-    // Update Google Sheets with the new status
-    fetch(SHEETDB_API_URL, {
+    fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            data: [
-                {
-                    Email: email,
-                    Date: date,
-                    Amount: amount,
-                    Status: status
-                }
-            ]
-        })
+        body: JSON.stringify({ data: [{ Status: status }] })
     })
-    .then(response => {
-        if (response.ok) {
-            alert(`Transaction updated to: ${status}`);
-        } else {
-            alert("Error updating transaction. Please try again.");
-        }
-    })
+    .then(() => alert(`Transaction updated to: ${status}`))
     .catch(error => console.error("Error updating status:", error));
 }
 
