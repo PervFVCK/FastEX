@@ -36,8 +36,7 @@
 
 
 
-
-<table>
+  <table>
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -58,16 +57,12 @@
 <script>
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-// Generate a unique Transaction ID (UUID format)
-function generateUUID() {
-    return 'xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+// Generate a truly unique Transaction ID using date & randomness
+function generateUniqueID(email, date, amount) {
+    return `${date.replace(/[-: ]/g, '')}-${Math.random().toString(36).substr(2, 6)}`;
 }
 
-// Load transactions
+// Load transactions and assign unique IDs
 function loadTransactions() {
     fetch(SHEETDB_API_URL)
     .then(response => response.json())
@@ -80,9 +75,9 @@ function loadTransactions() {
         data.forEach((row) => {
             let transactionID = row["Transaction ID"];
 
-            // Ensure each transaction has a unique ID based on email & timestamp
+            // Ensure each transaction has a unique ID
             if (!transactionID) {
-                transactionID = generateUUID();
+                transactionID = generateUniqueID(row.Email, row.Date, row.Amount);
                 transactionsToUpdate.push({
                     search: { Email: row.Email, Date: row.Date, Amount: row.Amount },
                     update: { "Transaction ID": transactionID }
@@ -109,7 +104,7 @@ function loadTransactions() {
             table.appendChild(tr);
         });
 
-        // Update Google Sheets with missing Transaction IDs
+        // Batch update Google Sheets with missing Transaction IDs
         if (transactionsToUpdate.length > 0) {
             fetch(SHEETDB_API_URL, {
                 method: "PATCH",
@@ -130,7 +125,7 @@ function updateStatus(transactionID, status) {
     fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [{ Status: status }] })
+        body: JSON.stringify({ data: [{ "Transaction ID": transactionID, Status: status }] })
     })
     .then(() => alert(`Transaction updated to: ${status}`))
     .catch(error => console.error("Error updating status:", error));
@@ -140,7 +135,7 @@ function updateStatus(transactionID, status) {
 loadTransactions();
 </script>
 
-
+    
   <section id="customerSupport">
         <h2>Customer Messages</h2>
         <ul id="supportMessages">
