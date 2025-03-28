@@ -65,6 +65,19 @@ nav a:hover {
     -webkit-text-fill-color: transparent;
 }
 
+.hero p {
+    font-size: 18px;
+    color: #333; /* Dark gray for readability */
+    text-align: center;
+    line-height: 1.6;
+    max-width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Gradient text effect */
+    font-weight: bold;
+}
 .cta-button {
     display: inline-block;
     padding: 12px 25px;
