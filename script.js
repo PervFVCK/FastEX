@@ -136,19 +136,32 @@ function sendMail() {
         });
 }
 
-    function showNotification(message, isSuccess = true) {
-    let notification = document.getElementById("notification");
-    let notificationText = document.getElementById("notification-text");
+  // Function to show the animated pop-up
+function showPopup(message, success = true) {
+    let popup = document.createElement("div");
+    popup.innerText = message;
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.padding = "20px";
+    popup.style.fontSize = "20px";
+    popup.style.color = "#fff";
+    popup.style.backgroundColor = success ? "green" : "red";
+    popup.style.borderRadius = "10px";
+    popup.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    popup.style.cursor = "pointer";
+    popup.style.zIndex = "1000";
+    
+    // Close pop-up on click
+    popup.onclick = function () {
+        document.body.removeChild(popup);
+    };
 
-    notificationText.textContent = message;
-    notification.style.backgroundColor = isSuccess ? "#28a745" : "#dc3545"; // Green for success, Red for failure
-    notification.classList.add("show");
-
-    setTimeout(() => {
-        notification.classList.remove("show");
-    }, 3000); // Hide after 3 seconds
+    document.body.appendChild(popup);
 }
 
+// Function to send crypto swap email
 function sendCryptoSwap() {
     let name = document.getElementById("cryptoName");
     let email = document.getElementById("cryptoEmail");
@@ -157,10 +170,8 @@ function sendCryptoSwap() {
     let bankName = document.getElementById("cryptoBankName");
     let accountNumber = document.getElementById("cryptoAccountNumber");
 
-    // Reset previous error styles
     [name, email, cryptoType, amount, bankName, accountNumber].forEach(field => field.style.border = "");
 
-    // Validate required fields
     if (!name.value.trim()) return showError(name, "Please enter your name.");
     if (!email.value.trim()) return showError(email, "Please enter your email.");
     if (!cryptoType.value) return showError(cryptoType, "Please select a cryptocurrency.");
@@ -168,7 +179,6 @@ function sendCryptoSwap() {
     if (!bankName.value.trim()) return showError(bankName, "Please enter your bank name.");
     if (!accountNumber.value.trim()) return showError(accountNumber, "Please enter your account number.");
 
-    // Validate email format
     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email.value.trim())) return showError(email, "Please enter a valid email address.");
 
@@ -183,16 +193,16 @@ function sendCryptoSwap() {
 
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
-            console.log("Email sent:", response);
-            showNotification("Email sent successfully!");
+            showPopup("Request Sent!", true);
             document.getElementById("cryptoForm").reset();
         })
         .catch(error => {
+            showPopup("Error Occurred!", false);
             console.error("Error sending email:", error);
-            showNotification("Failed to send email. Please try again.", false);
         });
 }
 
+// Function to send gift card swap email
 function sendGiftCardSwap() {
     let name = document.getElementById("giftCardName");
     let email = document.getElementById("giftCardEmail");
@@ -202,10 +212,8 @@ function sendGiftCardSwap() {
     let bankName = document.getElementById("giftCardBankName");
     let accountNumber = document.getElementById("giftCardAccountNumber");
 
-    // Reset previous error styles
     [name, email, giftCardType, giftCardValue, bankName, accountNumber].forEach(field => field.style.border = "");
 
-    // Validate required fields
     if (!name.value.trim()) return showError(name, "Please enter your name.");
     if (!email.value.trim()) return showError(email, "Please enter your email.");
     if (!giftCardType.value) return showError(giftCardType, "Please select a gift card type.");
@@ -213,7 +221,6 @@ function sendGiftCardSwap() {
     if (!bankName.value.trim()) return showError(bankName, "Please enter your bank name.");
     if (!accountNumber.value.trim()) return showError(accountNumber, "Please enter your account number.");
 
-    // Validate email format
     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email.value.trim())) return showError(email, "Please enter a valid email address.");
 
@@ -229,19 +236,18 @@ function sendGiftCardSwap() {
 
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
-            console.log("Email sent:", response);
-            showNotification("Email sent successfully!");
+            showPopup("Request Sent!", true);
             document.getElementById("giftCardForm").reset();
         })
         .catch(error => {
+            showPopup("Error Occurred!", false);
             console.error("Error sending email:", error);
-            showNotification("Failed to send email. Please try again.", false);
         });
 }
 
-// Helper function to highlight the error field and show animated message
+// Helper function to highlight the error field
 function showError(field, message) {
-    field.style.border = "2px solid red";  // Highlight field in red
+    field.style.border = "2px solid red";  
     field.focus();
-    showNotification(message, false);
+    alert(message);
 }
