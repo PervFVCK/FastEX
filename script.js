@@ -128,11 +128,11 @@ function sendMail() {
     emailjs.send("service_7j6gvqq", "template_2hs3cki", params)
         .then(response => {
             console.log("Email sent:", response);
-            alert("Email sent successfully!");
+            alert("Message sent successfully! You'll get a response via email.");
         })
         .catch(error => {
             console.error("Error sending email:", error);
-            alert("Failed to send email. Please try again.");
+            alert("Failed to send message. Please try again.");
         });
 }
 
@@ -193,11 +193,11 @@ function sendCryptoSwap() {
 
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
-            showPopup("Request Sent!", true);
+            showPopup("Request Sent! You will receive a confirmation email.", true);
             document.getElementById("cryptoForm").reset();
         })
         .catch(error => {
-            showPopup("Error Occurred!", false);
+            showPopup("Error Occurred! Please try again", false);
             console.error("Error sending email:", error);
         });
 }
@@ -236,11 +236,11 @@ function sendGiftCardSwap() {
 
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
-            showPopup("Request Sent!", true);
+            showPopup("Request Sent! You will receive a confirmation email.", true);
             document.getElementById("giftCardForm").reset();
         })
         .catch(error => {
-            showPopup("Error Occurred!", false);
+            showPopup("Error Occurred! Please try again", false);
             console.error("Error sending email:", error);
         });
 }
