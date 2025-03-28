@@ -207,16 +207,19 @@
     </div>
 </section>
 
-    <!-- Chat Support -->
-    <div id="chatBox" class="hidden">
-        <h3>Customer Support</h3>
-        <form id="chatForm">
-            <input type="text" id="name" name="name" placeholder="Your Name" required>
-            <input type="email" id="email" name="email" placeholder="Your Email" required>
-            <textarea id="message" name="message" placeholder="Type your message..." required></textarea>
-            <button type="submit" onclick="sendMail()">Send Message</button>
-        </form>
-    </div>
+    <!-- Chat Toggle Button -->
+<div id="chatToggle" onclick="toggleChat()">Chat with Us</div>
+
+<!-- Chat Support -->
+<div id="chatBox" class="hidden">
+    <h3>Customer Support</h3>
+    <form id="chatForm">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <textarea id="message" name="message" placeholder="Type your message..." required></textarea>
+        <button type="submit" onclick="sendMail()">Send Message</button>
+    </form>
+</div>
 
     <footer>
         <p>&copy; 2025 FastSwap. All Rights Reserved.</p>
