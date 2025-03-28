@@ -57,12 +57,15 @@
 <script>
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-// Generate a truly unique Transaction ID using date & randomness
-function generateUniqueID(email, date, amount) {
-    return `${date.replace(/[-: ]/g, '')}-${Math.random().toString(36).substr(2, 6)}`;
+// Generate a unique Transaction ID (UUID format)
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
-// Load transactions and assign unique IDs
 function loadTransactions() {
     fetch(SHEETDB_API_URL)
     .then(response => response.json())
@@ -70,23 +73,47 @@ function loadTransactions() {
         let table = document.getElementById("transactionsTable");
         table.innerHTML = ""; // Clear table
 
-        let transactionsToUpdate = []; // Store transactions that need unique IDs
+        let transactionsToUpdate = []; // Store transactions that need IDs
+        let transactionCount = {}; // Track duplicate transactions
+        let existingIDs = {}; // Store existing transaction IDs to prevent conflicts
 
         data.forEach((row) => {
+            let transactionKey = `${row.Email}-${row.Date}-${row.Amount}`;
             let transactionID = row["Transaction ID"];
 
-            // Ensure each transaction has a unique ID
+            if (!transactionCount[transactionKey]) {
+                transactionCount[transactionKey] = 0;
+            }
+            transactionCount[transactionKey]++;
+
+            // Generate or adjust transaction ID
             if (!transactionID) {
-                transactionID = generateUniqueID(row.Email, row.Date, row.Amount);
+                transactionID = generateUUID();
+            }
+
+            let uniqueTransactionID = transactionID;
+            if (transactionCount[transactionKey] > 1) {
+                uniqueTransactionID = `${transactionID}-${transactionCount[transactionKey] - 1}`;
+            }
+
+            // Ensure unique ID
+            while (existingIDs[uniqueTransactionID]) {
+                transactionCount[transactionKey]++;
+                uniqueTransactionID = `${transactionID}-${transactionCount[transactionKey] - 1}`;
+            }
+            existingIDs[uniqueTransactionID] = true;
+
+            // Prepare for batch update in Google Sheets
+            if (transactionID !== uniqueTransactionID) {
                 transactionsToUpdate.push({
                     search: { Email: row.Email, Date: row.Date, Amount: row.Amount },
-                    update: { "Transaction ID": transactionID }
+                    update: { "Transaction ID": uniqueTransactionID }
                 });
             }
 
             let tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${transactionID}</td>
+                <td>${uniqueTransactionID}</td>
                 <td>${row.Date}</td>
                 <td>${row.Name}</td>
                 <td>${row.Email}</td>
@@ -94,17 +121,17 @@ function loadTransactions() {
                 <td>${row.Amount || row["Gift Card Value"]}</td>
                 <td>${row["Bank Name"]}</td>
                 <td>${row["Account Number"]}</td>
-                <td id="status-${transactionID}">${row.Status || "Pending"}</td>
+                <td id="status-${uniqueTransactionID}">${row.Status || "Pending"}</td>
                 <td>
-                    <button onclick="updateStatus('${transactionID}', 'Approved')">Approve</button>
-                    <button onclick="updateStatus('${transactionID}', 'Rejected')">Reject</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', 'Approved')">Approve</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', 'Rejected')">Reject</button>
                 </td>
             `;
 
             table.appendChild(tr);
         });
 
-        // Batch update Google Sheets with missing Transaction IDs
+        // Perform batch update to fix missing transaction IDs in Google Sheets
         if (transactionsToUpdate.length > 0) {
             fetch(SHEETDB_API_URL, {
                 method: "PATCH",
@@ -117,7 +144,6 @@ function loadTransactions() {
     .catch(error => console.error("Error loading transactions:", error));
 }
 
-// Update transaction status
 function updateStatus(transactionID, status) {
     let statusCell = document.getElementById(`status-${transactionID}`);
     statusCell.innerText = status;
@@ -125,7 +151,7 @@ function updateStatus(transactionID, status) {
     fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [{ "Transaction ID": transactionID, Status: status }] })
+        body: JSON.stringify({ data: [{ Status: status }] })
     })
     .then(() => alert(`Transaction updated to: ${status}`))
     .catch(error => console.error("Error updating status:", error));
@@ -134,7 +160,6 @@ function updateStatus(transactionID, status) {
 // Load transactions on page load
 loadTransactions();
 </script>
-
     
   <section id="customerSupport">
         <h2>Customer Messages</h2>
