@@ -35,7 +35,7 @@
 
 
 
-    
+
 
     <table>
         <thead>
@@ -58,7 +58,7 @@
     <script>
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    // Generate a unique Transaction ID (UUID format)
+    // Generate a truly unique Transaction ID
     function generateUUID() {
         return 'xxxx-xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
@@ -75,12 +75,13 @@
             let table = document.getElementById("transactionsTable");
             table.innerHTML = ""; // Clear table before loading new data
 
-            data.forEach((row) => {
-                let transactionID = row["Transaction ID"] || generateUUID();
+            data.forEach((row, index) => {
+                let transactionID = row["Transaction ID"];
                 let rowID = row["id"]; // Unique Google Sheets Row ID
 
-                // If there's no Transaction ID, save a new unique one
-                if (!row["Transaction ID"]) {
+                // If no Transaction ID, generate one and update Google Sheets
+                if (!transactionID) {
+                    transactionID = generateUUID();
                     fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
@@ -100,8 +101,8 @@
                     <td>${row["Account Number"]}</td>
                     <td id="status-${rowID}">${row.Status || "Pending"}</td>
                     <td>
-                        <button onclick="updateStatus('${rowID}', 'Approved')">Approve</button>
-                        <button onclick="updateStatus('${rowID}', 'Rejected')">Reject</button>
+                        <button onclick="updateStatus('${rowID}', '${transactionID}', 'Approved')">Approve</button>
+                        <button onclick="updateStatus('${rowID}', '${transactionID}', 'Rejected')">Reject</button>
                     </td>
                 `;
 
@@ -112,7 +113,7 @@
     }
 
     // Update transaction status for the correct row
-    function updateStatus(rowID, status) {
+    function updateStatus(rowID, transactionID, status) {
         let statusCell = document.getElementById(`status-${rowID}`);
         statusCell.innerText = status;
 
@@ -121,7 +122,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: [{ Status: status }] })
         })
-        .then(() => alert(`Transaction updated to: ${status}`))
+        .then(() => alert(`Transaction ${transactionID} updated to: ${status}`))
         .catch(error => console.error("Error updating status:", error));
     }
 
