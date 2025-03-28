@@ -9,6 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+       document.addEventListener("DOMContentLoaded", function () {
+    let chatToggle = document.getElementById("chatToggle"); // Replace with the actual ID of the toggle button
+    if (chatToggle) {
+        chatToggle.style.position = "fixed";
+        chatToggle.style.bottom = "20px";  // Adjust as needed
+        chatToggle.style.right = "20px";  // Adjust to your preferred position
+        chatToggle.style.zIndex = "1000"; // Ensure it stays on top
+    }
+});
+    
     loadExchangeRates();
 });
 
