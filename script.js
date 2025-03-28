@@ -132,7 +132,7 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("cryptoAccountNumber").value
         };
 
-        emailjs.send("service_7j6gvqq", "YOUR_CRYPTO_TEMPLATE_ID", parms)
+        emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
                 alert("Email sent. You will receive a confirmation mail.");
             })
@@ -153,7 +153,7 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("giftCardAccountNumber").value
         };
 
-        emailjs.send("service_7j6gvqq", "YOUR_GIFTCARD_TEMPLATE_ID", parms)
+        emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
                 alert("Email sent. You will receive a confirmation mail.");
             })
