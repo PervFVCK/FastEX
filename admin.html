@@ -33,6 +33,8 @@
         <button onclick="updateRates()">Update Rates</button>
     </section>
 
+
+
     <table>
         <thead>
             <tr>
@@ -54,7 +56,7 @@
     <script>
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    // Generate a unique Transaction ID (UUID format)
+    // Generate a truly unique Transaction ID (UUID format)
     function generateUUID() {
         return 'xxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
@@ -63,16 +65,16 @@
         });
     }
 
-    function loadTransactions() {
-        fetch(SHEETDB_API_URL)
-        .then(response => response.json())
-        .then(data => {
+    async function loadTransactions() {
+        try {
+            let response = await fetch(SHEETDB_API_URL);
+            let data = await response.json();
             let table = document.getElementById("transactionsTable");
             table.innerHTML = ""; // Clear table
 
             let transactionIDs = new Set(); // Track generated Transaction IDs to prevent duplicates
 
-            data.forEach((row) => {
+            for (let row of data) {
                 let transactionID = row["Transaction ID"];
                 let rowID = row["id"];
 
@@ -84,11 +86,11 @@
 
                 // If transaction has no ID, update it in Google Sheets
                 if (!row["Transaction ID"]) {
-                    fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
+                    await fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ data: [{ "Transaction ID": transactionID }] })
-                    }).catch(error => console.error("Error updating Transaction ID:", error));
+                    });
                 }
 
                 let tr = document.createElement("tr");
@@ -109,29 +111,33 @@
                 `;
 
                 table.appendChild(tr);
+            }
+        } catch (error) {
+            console.error("Error loading transactions:", error);
+        }
+    }
+
+    async function updateStatus(rowID, status) {
+        try {
+            let statusCell = document.getElementById(`status-${rowID}`);
+            statusCell.innerText = status;
+
+            await fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ data: [{ Status: status }] })
             });
-        })
-        .catch(error => console.error("Error loading transactions:", error));
+
+            alert(`Transaction updated to: ${status}`);
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
     }
 
-    function updateStatus(rowID, status) {
-        let statusCell = document.getElementById(`status-${rowID}`);
-        statusCell.innerText = status;
-
-        fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: [{ Status: status }] })
-        })
-        .then(() => alert(`Transaction updated to: ${status}`))
-        .catch(error => console.error("Error updating status:", error));
-    }
-
+    // Load transactions on page load
     loadTransactions();
     </script>
 
-
-    <!-- Customer Messages -->
     <section id="customerSupport">
         <h2>Customer Messages</h2>
         <ul id="supportMessages">
