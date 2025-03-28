@@ -1,8 +1,12 @@
-function toggleChat() {
-    var chatBox = document.getElementById("chatBox");
-    chatBox.classList.toggle("show");
-}
 
+    document.addEventListener("DOMContentLoaded", function () {
+        var chatToggle = document.getElementById("chatToggle");
+        var chatBox = document.getElementById("chatBox");
+
+        chatToggle.addEventListener("click", function () {
+            chatBox.classList.toggle("show");
+        });
+    });
 
 
     loadExchangeRates();
