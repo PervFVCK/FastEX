@@ -144,7 +144,7 @@ th {
 /* FLOATING CHAT BUTTON */
 #chatToggle {
     position: fixed;
-    bottom: 10px; /* Lowering the button */
+    bottom: 5px; /* Moves it closer to the bottom */
     right: 20px;
     background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
