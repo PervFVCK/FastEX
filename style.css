@@ -144,7 +144,7 @@ th {
 /* FLOATING CHAT BUTTON */
 #chatToggle {
     position: fixed;
-    bottom: 20px;
+    bottom: 10px; /* Lowering the button */
     right: 20px;
     background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
@@ -155,7 +155,6 @@ th {
     font-size: 1.5rem;
     box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
 }
-
 /* FOOTER */
 footer {
     width: 100%;
