@@ -310,64 +310,71 @@ button:hover {
     }
 }
 
-/* CHATBOX */
 /* Chat Toggle Button */
 #chatToggle {
     position: fixed;
     bottom: 50px;
     right: 20px;
     background: linear-gradient(45deg, #00ffff, #ff00ff);
-    color: white;
-    padding: 14px 20px;
-    border-radius: 20px;
+    color: blue;
+    padding: 14px;
+    border-radius: 50%;
+    border: none;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.8);
-    transition: 0.3s ease;
+    font-size: 1.5rem;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#chatToggle:hover {
-    background: linear-gradient(45deg, #ff00ff, #00ffff);
-}
-
-/* Chatbox */
+/* Chat Box */
 #chatBox {
     position: fixed;
     bottom: 80px;
     right: 20px;
     width: 300px;
     background: white;
-    padding: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    display: none; /* Initially hidden */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    display: none;
 }
 
-/* Input fields */
-#chatBox input, #chatBox textarea {
+/* Show Chatbox */
+.show {
+    display: block !important;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+/* Chat Form Styling */
+#chatForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#chatForm input, #chatForm textarea {
     width: 100%;
-    margin: 5px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-/* Send Button */
-#chatBox button {
-    width: 100%;
-    padding: 10px;
+#chatForm button {
     background: linear-gradient(45deg, #00ffff, #ff00ff);
     color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-#chatBox button:hover {
-    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    border-radius: 5px;
 }
 /* FOOTER */
 footer {
