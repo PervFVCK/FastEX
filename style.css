@@ -342,7 +342,7 @@ button:hover {
     bottom: 50px;  /* This keeps it 20px from the bottom */
     right: 20px;
     background: linear-gradient(45deg, #00ffff, #ff00ff);
-    color: white;
+    color: blue;
     padding: 14px;
     border-radius: 50%;
     border: none;
