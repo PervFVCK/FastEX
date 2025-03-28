@@ -146,12 +146,15 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("cryptoAccountNumber").value
         };
 
+        // Validate form before sending
+        if (!validateForm(parms)) return;
+
         emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
-                alert("Email sent. You will receive a confirmation mail.");
+                alert("Crypto swap request sent successfully! You will receive a confirmation email.");
             })
             .catch(function(error) {
-                alert("Failed to send email. Please try again.");
+                alert("Failed to send request. Please try again.");
                 console.error("Error:", error);
             });
     }
@@ -167,12 +170,26 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("giftCardAccountNumber").value
         };
 
+        // Validate form before sending
+        if (!validateForm(parms)) return;
+
         emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
-                alert("Email sent. You will receive a confirmation mail.");
+                alert("Gift card swap request sent successfully! You will receive a confirmation email.");
             })
             .catch(function(error) {
-                alert("Failed to send email. Please try again.");
+                alert("Failed to send request. Please try again.");
                 console.error("Error:", error);
             });
+    }
+
+    // Function to validate form fields
+    function validateForm(parms) {
+        for (let key in parms) {
+            if (!parms[key]) {
+                alert("Please fill out all fields correctly.");
+                return false;
+            }
+        }
+        return true;
     }
