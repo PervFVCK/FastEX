@@ -136,6 +136,19 @@ function sendMail() {
         });
 }
 
+    function showNotification(message, isSuccess = true) {
+    let notification = document.getElementById("notification");
+    let notificationText = document.getElementById("notification-text");
+
+    notificationText.textContent = message;
+    notification.style.backgroundColor = isSuccess ? "#28a745" : "#dc3545"; // Green for success, Red for failure
+    notification.classList.add("show");
+
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 3000); // Hide after 3 seconds
+}
+
 function sendCryptoSwap() {
     let name = document.getElementById("cryptoName");
     let email = document.getElementById("cryptoEmail");
@@ -171,12 +184,12 @@ function sendCryptoSwap() {
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             console.log("Email sent:", response);
-            alert("Email sent successfully!");
+            showNotification("Email sent successfully!");
             document.getElementById("cryptoForm").reset();
         })
         .catch(error => {
             console.error("Error sending email:", error);
-            alert("Failed to send email. Please try again.");
+            showNotification("Failed to send email. Please try again.", false);
         });
 }
 
@@ -217,18 +230,18 @@ function sendGiftCardSwap() {
     emailjs.send("service_7j6gvqq", "template_2y372x7", params)
         .then(response => {
             console.log("Email sent:", response);
-            alert("Email sent successfully!");
+            showNotification("Email sent successfully!");
             document.getElementById("giftCardForm").reset();
         })
         .catch(error => {
             console.error("Error sending email:", error);
-            alert("Failed to send email. Please try again.");
+            showNotification("Failed to send email. Please try again.", false);
         });
 }
 
-// Helper function to highlight the error field
+// Helper function to highlight the error field and show animated message
 function showError(field, message) {
     field.style.border = "2px solid red";  // Highlight field in red
     field.focus();
-    alert(message);
+    showNotification(message, false);
 }
