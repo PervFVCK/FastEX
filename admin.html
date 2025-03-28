@@ -89,18 +89,28 @@ function loadTransactions() {
     .catch(error => console.error("Error loading transactions:", error));
 }
 
-// Update transaction status
 function updateStatus(email, status, transactionID) {
     let statusCell = document.getElementById(`status-${transactionID}`);
-    statusCell.innerText = status;
+    statusCell.innerText = status; // Update UI immediately for better user feedback
 
-    fetch(`${SHEETDB_API_URL}/Email/${encodeURIComponent(email)}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [{ Status: status }] })
+    fetch(`${SHEETDB_API_URL}/search?Email=${encodeURIComponent(email)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0) {
+            let rowId = data[0].id; // Get the correct row ID
+
+            fetch(`${SHEETDB_API_URL}/id/${rowId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ Status: status })
+            })
+            .then(() => alert(`Transaction updated to: ${status}`))
+            .catch(error => console.error("Error updating status:", error));
+        } else {
+            console.error("Transaction not found in database");
+        }
     })
-    .then(() => alert(`Transaction updated to: ${status}`))
-    .catch(error => console.error("Error updating status:", error));
+    .catch(error => console.error("Error fetching transaction data:", error));
 }
 
 // Load transactions on page load
