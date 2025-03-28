@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test SheetDB</title>
+</head>
+<body>
+    <button onclick="sendData()">Send Test Data</button>
+
+    <script>
+        function sendData() {
+            let url = "https://sheetdb.io/api/v1/bzeh6nxauqyqb"; // Replace with your API ID
+
+            let data = {
+                "Date": "2025-03-25",
+                "Name": "Test User",
+                "Email": "test@example.com",
+                "Crypto Type": "Bitcoin",
+                "Amount": "100",
+                "Bank Name": "ABC Bank",
+                "Account Number": "123456789"
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => alert("Data sent successfully!"))
+            .catch(error => alert("Error: " + error));
+        }
+    </script>
+</body>
+</html>
