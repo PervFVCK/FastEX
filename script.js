@@ -9,6 +9,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // DRAGGABLE CHAT TOGGLE BUTTON
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    chatToggle.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        offsetX = e.clientX - chatToggle.getBoundingClientRect().left;
+        offsetY = e.clientY - chatToggle.getBoundingClientRect().top;
+        chatToggle.style.transition = "none"; // Disable transition while dragging
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        let x = e.clientX - offsetX;
+        let y = e.clientY - offsetY;
+        chatToggle.style.left = `${x}px`;
+        chatToggle.style.top = `${y}px`;
+        chatToggle.style.position = "absolute"; // Change position to absolute
+    });
+
+    document.addEventListener("mouseup", () => {
+        isDragging = false;
+        chatToggle.style.transition = "all 0.2s ease"; // Re-enable transition
+    });
+});
+
     loadExchangeRates();
 });
 
