@@ -1,13 +1,14 @@
 
-    document.addEventListener("DOMContentLoaded", function () {
-        var chatToggle = document.getElementById("chatToggle");
-        var chatBox = document.getElementById("chatBox");
+    document.addEventListener("DOMContentLoaded", () => {
+    const chatToggle = document.getElementById("chatToggle");
+    const chatBox = document.getElementById("chatBox");
 
-        chatToggle.addEventListener("click", function () {
-            chatBox.classList.toggle("show");
+    if (chatToggle && chatBox) {
+        chatToggle.addEventListener("click", () => {
+            chatBox.classList.toggle("hidden");
         });
-    });
-
+    }
+});
 
     loadExchangeRates();
 });
