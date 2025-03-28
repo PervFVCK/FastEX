@@ -50,81 +50,80 @@
         <tbody id="transactionsTable"></tbody>
     </table>
 
-    <script>
-    // SheetDB API URL
-    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
+<script>
+const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    // Function to generate a unique UUID for Transaction ID
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16 | 0,
-                v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
+// Generate a unique Transaction ID (UUID format)
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+// Fetch transactions and assign unique Transaction IDs if missing
+function loadTransactions() {
+    fetch(SHEETDB_API_URL)
+    .then(response => response.json())
+    .then(data => {
+        let table = document.getElementById("transactionsTable");
+        table.innerHTML = ""; // Clear table
+
+        data.forEach((row, index) => {
+            let transactionID = row["Transaction ID"];
+            let rowID = row["id"]; // Store Row ID if available
+
+            // If transaction has no ID, generate a unique one and update only that specific row
+            if (!transactionID) {
+                transactionID = generateUUID();
+                fetch(`${SHEETDB_API_URL}/id/${rowID}`, { // Update using row ID
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ data: [{ "Transaction ID": transactionID }] })
+                }).catch(error => console.error("Error updating Transaction ID:", error));
+            }
+
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${transactionID}</td>
+                <td>${row.Date}</td>
+                <td>${row.Name}</td>
+                <td>${row.Email}</td>
+                <td>${row["Crypto Type"] || row["Gift Card Type"]}</td>
+                <td>${row.Amount || row["Gift Card Value"]}</td>
+                <td>${row["Bank Name"]}</td>
+                <td>${row["Account Number"]}</td>
+                <td id="status-${transactionID}">${row.Status || "Pending"}</td>
+                <td>
+                    <button onclick="updateStatus('${rowID}', '${transactionID}', 'Approved')">Approve</button>
+                    <button onclick="updateStatus('${rowID}', '${transactionID}', 'Rejected')">Reject</button>
+                </td>
+            `;
+
+            table.appendChild(tr);
         });
-    }
+    })
+    .catch(error => console.error("Error loading transactions:", error));
+}
 
-    // Fetch transactions from Google Sheets
-    function loadTransactions() {
-        fetch(SHEETDB_API_URL)
-        .then(response => response.json())
-        .then(data => {
-            let table = document.getElementById("transactionsTable");
-            table.innerHTML = ""; // Clear table before reloading
+// Update status using row ID
+function updateStatus(rowID, transactionID, status) {
+    let statusCell = document.getElementById(`status-${transactionID}`);
+    statusCell.innerText = status;
 
-            data.forEach((row) => {
-                let rowID = row["id"]; // Unique ID in Google Sheets
-                let transactionID = row["Transaction ID"] || generateUUID();
-                let status = row["Status"] || "Pending"; // Get stored status
+    fetch(`${SHEETDB_API_URL}/id/${rowID}`, { // Update using row ID
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [{ Status: status }] })
+    })
+    .then(() => alert(`Transaction updated to: ${status}`))
+    .catch(error => console.error("Error updating status:", error));
+}
 
-                // If transaction has no ID, update it in Google Sheets
-                if (!row["Transaction ID"]) {
-                    fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
-                        method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ data: [{ "Transaction ID": transactionID }] })
-                    }).catch(error => console.error("Error updating Transaction ID:", error));
-                }
-
-                let tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td>${transactionID}</td>
-                    <td>${row.Date}</td>
-                    <td>${row.Name}</td>
-                    <td>${row.Email}</td>
-                    <td>${row["Crypto Type"] || row["Gift Card Type"]}</td>
-                    <td>${row.Amount || row["Gift Card Value"]}</td>
-                    <td>${row["Bank Name"]}</td>
-                    <td>${row["Account Number"]}</td>
-                    <td id="status-${rowID}">${status}</td>
-                    <td>
-                        <button onclick="updateStatus('${rowID}', 'Approved')">Approve</button>
-                        <button onclick="updateStatus('${rowID}', 'Rejected')">Reject</button>
-                    </td>
-                `;
-
-                table.appendChild(tr);
-            });
-        })
-        .catch(error => console.error("Error loading transactions:", error));
-    }
-
-    // Update transaction status using row ID
-    function updateStatus(rowID, status) {
-        let statusCell = document.getElementById(`status-${rowID}`);
-        statusCell.innerText = status; // Update UI immediately
-
-        fetch(`${SHEETDB_API_URL}/id/${rowID}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: [{ Status: status }] })
-        })
-        .then(() => alert(`Transaction updated to: ${status}`))
-        .catch(error => console.error("Error updating status:", error));
-    }
-
-    // Load transactions on page load
-    loadTransactions();
-    </script>
+// Load transactions on page load
+loadTransactions();
+</script>
 
     
     <!-- Customer Messages -->
