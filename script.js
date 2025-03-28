@@ -1,21 +1,14 @@
-// CHAT SUPPORT TOGGLE
-document.addEventListener("DOMContentLoaded", () => {
-    const chatToggle = document.getElementById("chatToggle");
-    const chatBox = document.getElementById("chatBox");
-
-    if (chatToggle && chatBox) {
-        chatToggle.addEventListener("click", () => {
-            chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
-        });
+// Function to toggle chatbox visibility
+function toggleChat() {
+    var chatBox = document.getElementById("chatBox");
+    if (chatBox.style.display === "none" || chatBox.style.display === "") {
+        chatBox.style.display = "block"; // Show chatbox
+    } else {
+        chatBox.style.display = "none"; // Hide chatbox
     }
+}
 
-       document.addEventListener("DOMContentLoaded", function() {
-    let chatToggle = document.getElementById("chatToggle");
-    chatToggle.style.position = "fixed";
-    chatToggle.style.bottom = "20px";
-    chatToggle.style.right = "20px";
-});
-    
+
     loadExchangeRates();
 });
 
