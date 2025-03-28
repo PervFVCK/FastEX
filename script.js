@@ -1,13 +1,16 @@
-
-    document.addEventListener("DOMContentLoaded", function () {
+// CHAT SUPPORT TOGGLE
+document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
     const chatBox = document.getElementById("chatBox");
 
-    chatToggle.addEventListener("click", function () {
-        chatBox.classList.toggle("show"); // Show/hide chat box
-    });
+    if (chatToggle && chatBox) {
+        chatToggle.addEventListener("click", () => {
+            chatBox.style.display = chatBox.style.display === "block" ? "none" : "block";
+        });
+    }
+
+    loadExchangeRates();
 });
-    
 
 // POPUP FUNCTION
 function showPopup(message) {
@@ -67,6 +70,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// STORE CHAT MESSAGES
+function saveChatMessage(sender, message) {
+    let messages = JSON.parse(localStorage.getItem("supportMessages")) || [];
+    messages.push({ sender, message, timestamp: new Date().toISOString() });
+    localStorage.setItem("supportMessages", JSON.stringify(messages));
+}
+
+// STORE TRANSACTIONS
+function saveTransaction(transaction) {
+    let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    transactions.push(transaction);
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
+// LOAD EXCHANGE RATES FROM LOCAL STORAGE
+function loadExchangeRates() {
+    const rates = JSON.parse(localStorage.getItem("exchangeRates")) || {};
+
+    const rateElements = {
+        btcRate: document.getElementById("btcRate"),
+        ethRate: document.getElementById("ethRate"),
+        usdtRate: document.getElementById("usdtRate"),
+        amazonRate: document.getElementById("amazonRate"),
+        steamRate: document.getElementById("steamRate"),
+        googlePlayRate: document.getElementById("googlePlayRate"),
+        itunesRate: document.getElementById("itunesRate")
+    };
+
+    Object.keys(rateElements).forEach(key => {
+        if (rateElements[key]) {
+            rateElements[key].textContent = rates[key] ? `₦${rates[key]}` : "Rate not set";
+        }
+    });
+}
 
 
 
