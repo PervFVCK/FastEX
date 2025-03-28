@@ -137,6 +137,9 @@ function sendMail() {
 }
 
 function sendCryptoSwap() {
+        let isValid = validateForm("cryptoForm");
+        if (!isValid) return;
+
         let parms = {
             name: document.getElementById("cryptoName").value,
             email: document.getElementById("cryptoEmail").value,
@@ -146,12 +149,11 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("cryptoAccountNumber").value
         };
 
-        // Validate form before sending
-        if (!validateForm(parms)) return;
-
         emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
                 alert("Crypto swap request sent successfully! You will receive a confirmation email.");
+                document.getElementById("cryptoForm").reset();
+                clearErrors("cryptoForm");
             })
             .catch(function(error) {
                 alert("Failed to send request. Please try again.");
@@ -160,6 +162,9 @@ function sendCryptoSwap() {
     }
 
     function sendGiftCardSwap() {
+        let isValid = validateForm("giftCardForm");
+        if (!isValid) return;
+
         let parms = {
             name: document.getElementById("giftCardName").value,
             email: document.getElementById("giftCardEmail").value,
@@ -170,12 +175,11 @@ function sendCryptoSwap() {
             accountNumber: document.getElementById("giftCardAccountNumber").value
         };
 
-        // Validate form before sending
-        if (!validateForm(parms)) return;
-
         emailjs.send("service_7j6gvqq", "template_2y372x7", parms)
             .then(function(response) {
                 alert("Gift card swap request sent successfully! You will receive a confirmation email.");
+                document.getElementById("giftCardForm").reset();
+                clearErrors("giftCardForm");
             })
             .catch(function(error) {
                 alert("Failed to send request. Please try again.");
@@ -183,13 +187,49 @@ function sendCryptoSwap() {
             });
     }
 
-    // Function to validate form fields
-    function validateForm(parms) {
-        for (let key in parms) {
-            if (!parms[key]) {
-                alert("Please fill out all fields correctly.");
-                return false;
+    // Form validation function
+    function validateForm(formId) {
+        let form = document.getElementById(formId);
+        let inputs = form.getElementsByTagName("input");
+        let isValid = true;
+
+        clearErrors(formId);
+
+        for (let input of inputs) {
+            if (input.hasAttribute("required") && !input.value.trim()) {
+                showError(input, "This field is required");
+                isValid = false;
+            }
+            if (input.type === "email" && !validateEmail(input.value)) {
+                showError(input, "Enter a valid email");
+                isValid = false;
             }
         }
-        return true;
+
+        return isValid;
+    }
+
+    // Function to validate email format
+    function validateEmail(email) {
+        let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    // Function to show error message near the field
+    function showError(input, message) {
+        let error = document.createElement("span");
+        error.className = "error-message";
+        error.style.color = "red";
+        error.style.fontSize = "12px";
+        error.innerText = message;
+        input.parentNode.appendChild(error);
+    }
+
+    // Function to clear previous error messages
+    function clearErrors(formId) {
+        let form = document.getElementById(formId);
+        let errors = form.getElementsByClassName("error-message");
+        while (errors.length > 0) {
+            errors[0].parentNode.removeChild(errors[0]);
+        }
     }
