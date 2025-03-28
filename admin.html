@@ -36,7 +36,7 @@
 
 
 
-  <table>
+     <table>
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -123,8 +123,8 @@ function loadTransactions() {
                 <td>${row["Account Number"]}</td>
                 <td id="status-${uniqueTransactionID}">${row.Status || "Pending"}</td>
                 <td>
-                    <button onclick="updateStatus('${uniqueTransactionID}', 'Approved')">Approve</button>
-                    <button onclick="updateStatus('${uniqueTransactionID}', 'Rejected')">Reject</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', '${row.Email}', '${row.Date}', '${row.Amount}', 'Approved')">Approve</button>
+                    <button onclick="updateStatus('${uniqueTransactionID}', '${row.Email}', '${row.Date}', '${row.Amount}', 'Rejected')">Reject</button>
                 </td>
             `;
 
@@ -144,32 +144,35 @@ function loadTransactions() {
     .catch(error => console.error("Error loading transactions:", error));
 }
 
-function updateStatus(transactionID, status) {
+function updateStatus(transactionID, email, date, amount, status) {
     let statusCell = document.getElementById(`status-${transactionID}`);
     statusCell.innerText = status;
 
-    // Search for the exact transaction ID first
-    fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.length > 0) {
-            let rowId = data[0].id; // Get the correct row ID in Google Sheets
-
-            // Update the status in Google Sheets using the row ID
-            fetch(`${SHEETDB_API_URL}/id/${rowId}`, {
-                method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ data: [{ Status: status }] })
-            })
-            .then(() => alert(`Transaction updated to: ${status}`))
-            .catch(error => console.error("Error updating status:", error));
+    // Update Google Sheets with the new status
+    fetch(SHEETDB_API_URL, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            data: [
+                {
+                    Email: email,
+                    Date: date,
+                    Amount: amount,
+                    Status: status
+                }
+            ]
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(`Transaction updated to: ${status}`);
         } else {
-            console.error("Transaction not found in SheetDB");
+            alert("Error updating transaction. Please try again.");
         }
     })
-    .catch(error => console.error("Error searching for transaction:", error));
+    .catch(error => console.error("Error updating status:", error));
 }
-    
+
 // Load transactions on page load
 loadTransactions();
 </script>
