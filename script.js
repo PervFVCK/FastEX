@@ -105,19 +105,32 @@ function loadExchangeRates() {
     });
 }
 
-function sendMail() {
-    let parms = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        message: document.getElementById("message").value
-    };
+function sendMail(event) {
+    event.preventDefault(); // Prevent form submission
 
-    emailjs.send("service_7j6gvqq", "template_2hs3cki", parms)
-        .then(function(response) {
-            alert("Email sent. You will receive a confirmation mail.");
-        })
-        .catch(function(error) {
-            alert("Failed to send email. Please try again.");
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let message = document.getElementById("message").value.trim();
+
+    // Email format regex pattern
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name || !email || !message) {
+        alert("Please fill out all required fields.");
+        return;
+    }
+
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    let params = { name, email, message };
+
+    emailjs.send("service_7j6gvqq", "template_2hs3cki", params)
+        .then(() => alert("Your request is being processed. You will receive a confirmation mail."))
+        .catch((error) => {
+            alert("An error occurred. Please try again.");
             console.error("Error:", error);
         });
 }
