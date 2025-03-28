@@ -105,3 +105,31 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSupportMessages();
     loadTransactions();
 });
+
+function fetchSwapRequests() {
+    fetch("https://sheetdb.io/api/v1/bzeh6nxauqyqb")
+        .then(response => response.json())
+        .then(data => {
+            let tableBody = document.getElementById("swapRequestsBody");
+            tableBody.innerHTML = ""; // Clear old data
+
+            data.forEach(request => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${request.name}</td>
+                    <td>${request.email}</td>
+                    <td>${request.cryptoType || request.giftCardType}</td>
+                    <td>${request.amount || request.giftCardValue}</td>
+                    <td>${request.bankName}</td>
+                    <td>${request.accountNumber}</td>
+                    <td>${request.giftCardCode || "N/A"}</td>
+                    <td>${request.date}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error("Error fetching swap requests:", error));
+}
+
+// Fetch requests automatically when the page loads
+window.onload = fetchSwapRequests;
