@@ -36,6 +36,7 @@
     <table>
         <thead>
             <tr>
+                <th>Transaction ID</th>
                 <th>Date</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -51,10 +52,9 @@
     </table>
 
     <script>
-    // SheetDB API URL
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/bzeh6nxauqyqb";
 
-    // Function to generate a unique UUID for Transaction ID
+    // Generate a unique Transaction ID (UUID format)
     function generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random() * 16 | 0,
@@ -63,7 +63,6 @@
         });
     }
 
-    // Fetch transactions from Google Sheets
     function loadTransactions() {
         fetch(SHEETDB_API_URL)
         .then(response => response.json())
@@ -72,11 +71,12 @@
             table.innerHTML = ""; // Clear table
 
             data.forEach((row, index) => {
-                let transactionID = row["Transaction ID"] || generateUUID();
+                let transactionID = row["Transaction ID"];
 
-                // If transaction has no ID, update it in Google Sheets
-                if (!row["Transaction ID"]) {
-                    fetch(`${SHEETDB_API_URL}/Email/${encodeURIComponent(row.Email)}`, {
+                // If transaction has no ID, generate one and update it in Google Sheets
+                if (!transactionID) {
+                    transactionID = generateUUID();
+                    fetch(`${SHEETDB_API_URL}/search?Email=${encodeURIComponent(row.Email)}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ data: [{ "Transaction ID": transactionID }] })
@@ -85,6 +85,7 @@
 
                 let tr = document.createElement("tr");
                 tr.innerHTML = `
+                    <td>${transactionID}</td>
                     <td>${row.Date}</td>
                     <td>${row.Name}</td>
                     <td>${row.Email}</td>
@@ -105,12 +106,11 @@
         .catch(error => console.error("Error loading transactions:", error));
     }
 
-    // Update transaction status
     function updateStatus(transactionID, status) {
         let statusCell = document.getElementById(`status-${transactionID}`);
         statusCell.innerText = status;
 
-        fetch(`${SHEETDB_API_URL}/Transaction ID/${encodeURIComponent(transactionID)}`, {
+        fetch(`${SHEETDB_API_URL}/search?Transaction ID=${encodeURIComponent(transactionID)}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ data: [{ Status: status }] })
@@ -135,4 +135,4 @@
         <p>&copy; 2025 FastSwap Admin Panel</p>
     </footer>
 </body>
-            </html>
+</html>
