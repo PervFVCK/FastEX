@@ -17,6 +17,194 @@
 </script>
     <script src="script.js" defer></script>
     <style>
+
+ 
+        /* General Dark Theme */
+        body {
+            background: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background: rgba(20, 20, 20, 0.9);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ff8a00, #ff0084);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #ff8a00;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 15px;
+            transition: 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            color: #ff0084;
+            text-shadow: 0px 0px 10px rgba(255, 140, 0, 0.8);
+        }
+
+        /* Hero Section */
+        #hero {
+            padding: 150px 20px 80px;
+            background: linear-gradient(to right, #121212, #1b1b1b);
+        }
+
+        #hero h2 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #ff8a00, #ff0084);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 20px auto;
+            line-height: 1.6;
+            color: #bbb;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            box-shadow: 0px 0px 15px rgba(255, 152, 0, 0.8);
+        }
+
+        /* FastSwap Section */
+        #about {
+            padding: 60px 20px;
+            background: #121212;
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #ff8a00, #ff0084);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+        }
+
+        .feature:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature h3 {
+            font-size: 1.8rem;
+            color: #ff8a00;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Chat Support */
+        #chatBox {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        #chatBox h3 {
+            font-size: 1.5rem;
+            color: #ff8a00;
+        }
+
+        #chatForm input, #chatForm textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+
+        #chatForm button {
+            margin-top: 10px;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #1b1b1b;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .feature h3 {
+                font-size: 1.5rem;
+            }
+            
+            .feature p {
+                font-size: 1rem;
+            }
+        }
+    
+        
         /* Enhance form appearance */
         form {
             background: #1e1e1e;
