@@ -72,6 +72,81 @@ h1:hover {
     100% { transform: translateY(0px); }
 }
 
+/* Header Styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #222;
+    color: white;
+    position: relative;
+}
+
+/* Hamburger Icon (Three Bars) */
+#menuToggle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    z-index: 1001; /* Ensure it's above the menu */
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background: white;
+    transition: 0.3s;
+}
+
+/* Navigation Sidebar (Hidden Initially) */
+nav {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Hidden off-screen */
+    width: 250px;
+    height: 100%;
+    background: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.4s ease-in-out;
+    box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #00ffff;
+    color: #222;
+}
+
+/* Show Menu When Active */
+nav.active {
+    right: 0;
+}
+
+/* Transform Hamburger Icon into "X" When Active */
+#menuToggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+#menuToggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+#menuToggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
 nav {
     display: flex;
     gap: 15px;
