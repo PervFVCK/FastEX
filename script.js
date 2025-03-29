@@ -1,15 +1,14 @@
 function openNav() {
-    document.getElementById("sideMenu").style.right = "0"; // Open menu
-    document.getElementById("overlay").style.display = "block"; // Show blur overlay
+    document.getElementById("menu").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
     document.getElementById("chatToggle").style.display = "none"; // Hide chat toggle
 }
 
 function closeNav() {
-    document.getElementById("sideMenu").style.right = "-250px"; // Close menu
-    document.getElementById("overlay").style.display = "none"; // Hide blur overlay
+    document.getElementById("menu").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
     document.getElementById("chatToggle").style.display = "block"; // Show chat toggle
 }
-
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
