@@ -1,8 +1,8 @@
 
-document.getElementById("menuToggle").addEventListener("click", function () {
-    document.getElementById("menu").classList.toggle("active");
-    this.classList.toggle("active");
-});
+function toggleMenu() {
+    let body = document.body;
+    body.classList.toggle("menu-open");
+}
 
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
