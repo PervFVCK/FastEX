@@ -38,7 +38,7 @@ h1 {
     text-align: center;
     font-family: 'Luckiest Guy', cursive; /* Fun cartoon-style font */
     letter-spacing: 2px;
-    text-transform: uppercase;
+    text-transform: none;
     
     /* Cartoon Gradient Text */
     background: linear-gradient(90deg, #ffcc00, #ff00ff);
