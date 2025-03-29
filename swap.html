@@ -95,14 +95,22 @@
 </head>
 <body>
     <header>
-<h1 id="cartoonTitle">FastEX</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="swap.html">Swap</a>
-            <a href="rates.html">Rates</a>
-            
-        </nav>
-    </header>
+    <h1 id="cartoonTitle">FastEX</h1>
+
+    <!-- Hamburger Menu -->
+    <div id="menuToggle">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <!-- Navigation Menu (Hidden Sidebar) -->
+    <nav id="menu">
+        <a href="index.html">Home</a>
+        <a href="swap.html">Swap</a>
+        <a href="rates.html">Rates</a>
+    </nav>
+</header>
 <section id="cryptoSwap">
     <h2>Swap Cryptocurrency for Naira</h2>
     <form id="cryptoForm" onsubmit="sendCryptoSwap(); return false;">
