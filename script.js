@@ -1,13 +1,14 @@
-// Open Menu
-document.getElementById("menuToggle").addEventListener("click", function () {
-    document.getElementById("sideMenu").classList.add("active");
-});
+function openNav() {
+    document.getElementById("sideMenu").style.right = "0"; // Open menu
+    document.getElementById("overlay").style.display = "block"; // Show blur overlay
+    document.getElementById("chatToggle").style.display = "none"; // Hide chat toggle
+}
 
-// Close Menu
-document.querySelector(".close-btn").addEventListener("click", function () {
-    document.getElementById("sideMenu").classList.remove("active");
-});
-
+function closeNav() {
+    document.getElementById("sideMenu").style.right = "-250px"; // Close menu
+    document.getElementById("overlay").style.display = "none"; // Hide blur overlay
+    document.getElementById("chatToggle").style.display = "block"; // Show chat toggle
+}
 
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
