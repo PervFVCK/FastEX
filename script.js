@@ -1,14 +1,9 @@
-function openNav() {
-    document.getElementById("menu").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
-    document.getElementById("chatToggle").style.display = "none"; // Hide chat toggle
-}
+document.getElementById("menuToggle").addEventListener("click", function () {
+    document.getElementById("menu").classList.toggle("active");
+    this.classList.toggle("active");
+});
 
-function closeNav() {
-    document.getElementById("menu").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
-    document.getElementById("chatToggle").style.display = "block"; // Show chat toggle
-}
+
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
