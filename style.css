@@ -29,37 +29,45 @@ header {
     border-bottom: 2px solid rgba(0, 255, 255, 0.3);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 h1 {
-    font-size: 2.8rem;
-    font-weight: 750; /* Slightly bold */
+    font-size: 3rem;
+    font-weight: 700;
     text-align: center;
-    color: #00ffff; /* Cyan for a modern look */
-    text-shadow: 2px 2px 5px rgba(0, 255, 255, 0.5); /* Glow effect */
+    font-family: 'Orbitron', sans-serif; /* Unique digital-style font */
+    letter-spacing: 2px;
+    text-transform: uppercase;
     
-    /* Animation */
-    animation: fadeIn 1.5s ease-in-out, floatText 3s infinite alternate ease-in-out;
+    /* Gradient Text Effect */
+    background: linear-gradient(90deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Default Neon Glow */
+    text-shadow: 0px 0px 5px rgba(0, 255, 255, 0.8), 0px 0px 10px rgba(255, 0, 255, 0.8);
+    
+    /* Floating & Fade-in Effect */
+    opacity: 0; /* Hidden initially */
+    animation: fadeIn 2s ease-out forwards, floatUp 3s infinite ease-in-out;
 }
 
-/* Fade-in effect */
+/* Hover Effect - Stronger Glow */
+h1:hover {
+    text-shadow: 0px 0px 15px rgba(0, 255, 255, 1), 0px 0px 25px rgba(255, 0, 255, 1);
+}
+
+/* Fade-In Animation */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Floating animation */
-@keyframes floatText {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(8px);
-    }
+/* Floating Animation */
+@keyframes floatUp {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
 }
 
 nav {
