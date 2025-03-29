@@ -303,7 +303,6 @@ footer {
     padding: 15px;
     background: rgba(15, 15, 30, 0.8);
     color: #00ffff;
-    border-top: 2px solid rgba(0, 255, 255, 0.3);
     z-index: 1000;
 }
 
