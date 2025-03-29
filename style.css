@@ -29,32 +29,34 @@ header {
     border-bottom: 2px solid rgba(0, 255, 255, 0.3);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 h1 {
-    font-size: 3rem;
-    font-weight: 700;
+    font-size: 4rem;
+    font-weight: bold;
     text-align: center;
-    font-family: 'Orbitron', sans-serif; /* Unique digital-style font */
+    font-family: 'Luckiest Guy', cursive; /* Fun cartoon-style font */
     letter-spacing: 2px;
     text-transform: uppercase;
     
-    /* Gradient Text Effect */
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
+    /* Cartoon Gradient Text */
+    background: linear-gradient(90deg, #ffcc00, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    /* Default Neon Glow */
-    text-shadow: 0px 0px 5px rgba(0, 255, 255, 0.8), 0px 0px 10px rgba(255, 0, 255, 0.8);
-    
-    /* Floating & Fade-in Effect */
+    /* Cartoon Shadow */
+    text-shadow: 3px 3px 0px #000, 5px 5px 0px rgba(255, 0, 0, 0.5);
+
+    /* Fade-in & Floating Effect */
     opacity: 0; /* Hidden initially */
     animation: fadeIn 2s ease-out forwards, floatUp 3s infinite ease-in-out;
 }
 
-/* Hover Effect - Stronger Glow */
+/* Hover Effect - Bouncy Cartoon Jump */
 h1:hover {
-    text-shadow: 0px 0px 15px rgba(0, 255, 255, 1), 0px 0px 25px rgba(255, 0, 255, 1);
+    transform: scale(1.1) rotate(-2deg);
+    transition: 0.3s ease-out;
 }
 
 /* Fade-In Animation */
