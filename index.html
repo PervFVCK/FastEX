@@ -162,23 +162,24 @@
     
 </head>
 <body>
-    <header>
-    <h1 id="cartoonTitle">FastEX</h1>
+  <header>
+        <h1 id="cartoonTitle">FastEX</h1>
 
-    <!-- Hamburger Menu -->
-    <div id="menuToggle">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
+        <!-- Hamburger Menu -->
+        <div id="menuToggle" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
 
-    <!-- Navigation Menu (Hidden Sidebar) -->
+    <!-- Sidebar Navigation -->
     <nav id="menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
         <a href="index.html">Home</a>
         <a href="swap.html">Swap</a>
         <a href="rates.html">Rates</a>
     </nav>
-</header>
 
     <section id="hero">
         <h2>Fast, Secure & Reliable Crypto & Gift Card Exchange</h2>
