@@ -104,16 +104,27 @@ header {
 nav {
     position: fixed;
     top: 0;
-    right: -250px; /* Hidden off-screen */
+    right: -250px; /* Keep it off-screen */
     width: 250px;
     height: 100%;
-    background: inherit;
+    background: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     transition: right 0.4s ease-in-out;
     box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* Ensure Body Doesn't Expand When Sidebar is Hidden */
+body {
+    overflow-x: hidden;
+}
+
+/* Show Menu When Active */
+nav.active {
+    right: 0;
 }
 
 nav a {
