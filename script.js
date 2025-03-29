@@ -1,3 +1,9 @@
+
+document.getElementById("menuToggle").addEventListener("click", function () {
+    document.getElementById("menu").classList.toggle("active");
+    this.classList.toggle("active");
+});
+
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
