@@ -139,7 +139,9 @@ th {
     bottom: 80px;
     right: 20px;
     width: 300px;
-    background: black;
+    background: #111; /* Deep dark gray */
+    color: #fff; /* White text */
+    border: 1px solid #00ffff; /* Cyan border for glow effect */
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     padding: 15px;
