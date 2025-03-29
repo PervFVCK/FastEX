@@ -1,9 +1,17 @@
 
+// Function to toggle the side menu and animate the hamburger button
 function toggleMenu() {
-    let body = document.body;
-    body.classList.toggle("menu-open");
-}
+    let nav = document.getElementById("sideNav");
+    let menuToggle = document.getElementById("menuToggle");
 
+    if (nav.style.right === "0px") {
+        nav.style.right = "-250px"; // Hide menu
+        menuToggle.classList.remove("menu-open"); // Reset hamburger icon
+    } else {
+        nav.style.right = "0px"; // Show menu
+        menuToggle.classList.add("menu-open"); // Animate hamburger icon
+    }
+}
 // CHAT SUPPORT TOGGLE
 document.addEventListener("DOMContentLoaded", () => {
     const chatToggle = document.getElementById("chatToggle");
