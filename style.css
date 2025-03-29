@@ -79,7 +79,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background: #222;
+    background: radial-gradient(circle at top, #0d0d1a, #05050a);
     color: white;
     position: relative;
 }
