@@ -94,23 +94,24 @@
 </head>
 <body>
     <header>
-    <h1 id="cartoonTitle">FastEX</h1>
+        <h1 id="cartoonTitle">FastEX</h1>
 
-    <!-- Hamburger Menu -->
-    <div id="menuToggle">
+        
+    <!-- Hamburger Menu Button -->
+    <div id="menuToggle" onclick="toggleMenu()">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
     </div>
+  </header>
 
-    <!-- Navigation Menu (Hidden Sidebar) -->
-    <nav id="menu">
+    <!-- Side Navigation Menu -->
+    <nav id="sideNav">
+        <span id="closeBtn" onclick="toggleMenu()">✖</span>
         <a href="index.html">Home</a>
         <a href="swap.html">Swap</a>
         <a href="rates.html">Rates</a>
     </nav>
-</header>
-
     <section id="cryptoRates">
         <h2>Current Crypto Exchange Rates</h2>
         <table>
